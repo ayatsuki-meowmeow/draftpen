@@ -4,39 +4,53 @@ import { i } from "@instantdb/react";
 
 const _schema = i.schema({
   entities: {
-    $files: i.entity({
-      path: i.string().unique().indexed(),
-      url: i.string(),
-    }),
     $users: i.entity({
-      email: i.string().unique().indexed().optional(),
-      imageURL: i.string().optional(),
-      type: i.string().optional(),
+      email: i.string().unique(),
     }),
-    todos: i.entity({
-      text: i.string(),
-      done: i.boolean(),
-      createdAt: i.number(),
+    profiles: i.entity({
+      name: i.string(),
+      userId: i.string().indexed(),
+      bio: i.string().optional(),
+      createdAt: i.date(),
+      updatedAt: i.date(),
+    }),
+    posts: i.entity({
+      slug: i.string().unique().indexed(),
+      title: i.string().indexed(),
+      content: i.string(),
+      authorId: i.string().indexed(),
+      status: i.string().indexed(),
+      publishedAt: i.date().optional(),
+      createdAt: i.date(),
+      updatedAt: i.date(),
     }),
   },
   links: {
-    $usersLinkedPrimaryUser: {
+    userProfiles: {
       forward: {
-        on: "$users",
+        on: "profiles",
         has: "one",
-        label: "linkedPrimaryUser",
+        label: "user",
         onDelete: "cascade",
       },
       reverse: {
         on: "$users",
-        has: "many",
-        label: "linkedGuestUsers",
+        has: "one",
+        label: "profile",
       },
     },
-  },
-  rooms: {
-    todos: {
-      presence: i.entity({}),
+    authorPosts: {
+      forward: {
+        on: "posts",
+        has: "one",
+        label: "author",
+        onDelete: "cascade",
+      },
+      reverse: {
+        on: "profiles",
+        has: "many",
+        label: "posts",
+      },
     },
   },
 });
