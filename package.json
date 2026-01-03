@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@instantdb/react": "latest",
     "@instantdb/admin": "latest",
+    "@instantdb/react": "latest",
     "next": "^15.4.8",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
@@ -20,6 +20,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.1",
     "tailwindcss": "^4",
     "typescript": "^5.9.3"
   },
