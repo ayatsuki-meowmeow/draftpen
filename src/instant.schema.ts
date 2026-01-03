@@ -57,6 +57,8 @@ const _schema = i.schema({
 
 // This helps Typescript display nicer intellisense
 type _AppSchema = typeof _schema;
+// TODO: AppSchemaが必要かどうか確認する
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface AppSchema extends _AppSchema {}
 const schema: AppSchema = _schema;
 
