@@ -1,45 +1,45 @@
-// "use client";
+"use client";
 
 // import { db } from "@/lib/db";
 // import { type AppSchema } from "@/instant.schema";
 // import { id, InstaQLEntity } from "@instantdb/react";
 
-// // type Todo = InstaQLEntity<AppSchema, "todos">;
+// type Todo = InstaQLEntity<AppSchema, "todos">;
 
-// // const room = db.room("todos");
+// const room = db.room("todos");
 
-// function App() {
-//   // Read Data
-//   const { isLoading, error, data } = db.useQuery({ todos: {} });
-//   const { peers } = db.rooms.usePresence(room);
-//   const numUsers = 1 + Object.keys(peers).length;
-//   if (isLoading) {
-//     return;
-//   }
-//   if (error) {
-//     return <div className="text-red-500 p-4">Error: {error.message}</div>;
-//   }
-//   const { todos } = data;
-//   return (
-//     <div className="font-mono min-h-screen flex justify-center items-center flex-col space-y-4">
-//       <div className="text-xs text-gray-500">
-//         Number of users online: {numUsers}
-//       </div>
-//       <h2 className="tracking-wide text-5xl text-gray-300">todos</h2>
-//       <div className="border border-gray-300 max-w-xs w-full">
-//         <TodoForm todos={todos} />
-//         <TodoList todos={todos} />
-//         <ActionBar todos={todos} />
-//       </div>
-//       <div className="text-xs text-center">
-//         Open another tab to see todos update in realtime!
-//       </div>
-//     </div>
-//   );
-// }
+function App() {
+  // Read Data
+  // const { isLoading, error, data } = db.useQuery({ todos: {} });
+  // const { peers } = db.rooms.usePresence(room);
+  // const numUsers = 1 + Object.keys(peers).length;
+  // if (isLoading) {
+  //   return;
+  // }
+  // if (error) {
+  //   return <div className="text-red-500 p-4">Error: {error.message}</div>;
+  // }
+  // const { todos } = data;
+  return (
+    <div className="font-mono min-h-screen flex justify-center items-center flex-col space-y-4">
+      <div className="text-xs text-gray-500">
+        {/* Number of users online: {numUsers} */}
+      </div>
+      <h2 className="tracking-wide text-5xl text-gray-300">todos</h2>
+      <div className="border border-gray-300 max-w-xs w-full">
+        {/* <TodoForm todos={todos} />
+        <TodoList todos={todos} />
+        <ActionBar todos={todos} /> */}
+      </div>
+      <div className="text-xs text-center">
+        Open another tab to see todos update in realtime!
+      </div>
+    </div>
+  );
+}
 
-// // Write Data
-// // ---------
+// Write Data
+// ---------
 // function addTodo(text: string) {
 //   db.transact(
 //     db.tx.todos[id()].update({
@@ -71,8 +71,8 @@
 //   );
 // }
 
-// // Components
-// // ----------
+// Components
+// ----------
 // function ChevronDownIcon() {
 //   return (
 //     <svg viewBox="0 0 20 20">
@@ -166,4 +166,4 @@
 //   );
 // }
 
-// export default App;
+export default App;
