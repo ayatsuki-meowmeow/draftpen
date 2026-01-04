@@ -32,7 +32,8 @@ function App() {
         <ActionBar todos={todos} /> */}
       </div>
       <div className="text-xs text-center">
-        Open another tab to see todos update in realtime!
+          <span>ログインは</span>
+          <a className="text-blue-500 underline ml-1" href="/login">こちら</a>
       </div>
     </div>
   );
