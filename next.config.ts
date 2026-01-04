@@ -1,7 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async headers() {
+      return [
+        {
+          source: '/:path*',
+          headers: [
+            {
+              // GoogleOauthはポップアップを使うため、COOPヘッダーを追加してクロスオリジンのポップアップを許可する必要がある
+              key: 'Cross-Origin-Opener-Policy',
+              value: 'same-origin-allow-popups',
+            },
+          ],
+        }
+      ]
+  },
 };
 
 export default nextConfig;
