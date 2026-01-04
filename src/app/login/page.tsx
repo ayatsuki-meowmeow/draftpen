@@ -5,9 +5,9 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { db } from '@/lib/db';
 
 
-const GOOGLE_CLIENT_ID = '548096054278-08kj1tc4k2e7ob3id2fsoek8vp3ngh5o.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
-const GOOGLE_CLIENT_NAME = 'google-web';
+const GOOGLE_CLIENT_NAME = process.env.GOOGLE_CLIENT_NAME;
 
 function App() {
   return (
@@ -33,6 +33,10 @@ function UserInfo() {
 // 報告例: https://github.com/firebase/firebase-js-sdk/issues/6199
 function Login() {
   const [nonce] = useState(crypto.randomUUID());
+
+  if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_NAME) {
+    return <div>現在ログインは利用できません</div>;
+  }
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
