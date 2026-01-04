@@ -5,10 +5,8 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { db } from '@/lib/db';
 
 
-// e.g. 89602129-cuf0j.apps.googleusercontent.com
 const GOOGLE_CLIENT_ID = '548096054278-08kj1tc4k2e7ob3id2fsoek8vp3ngh5o.apps.googleusercontent.com';
 
-// Use the google client name in the Instant dashboard auth tab
 const GOOGLE_CLIENT_NAME = 'google-web';
 
 function App() {
@@ -29,6 +27,10 @@ function UserInfo() {
   return <h1>Hello {user.email}!</h1>;
 }
 
+// NOTE: ログイン時にコンソール上でCOOPエラーの警告が出るが、ログイン自体は成功する。
+// この問題はポップアップを使ってGoogleOAuth認証をする際に発生する既知の事象。
+// 現状のところ特に問題はないので放置する。
+// 報告例: https://github.com/firebase/firebase-js-sdk/issues/6199
 function Login() {
   const [nonce] = useState(crypto.randomUUID());
 
