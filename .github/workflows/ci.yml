@@ -5,12 +5,12 @@ on:
     branches:
       - main
       - develop
-      - 'release/**'
+      - "release/**"
   pull_request:
     branches:
       - main
       - develop
-      - 'release/**'
+      - "release/**"
 
 jobs:
   CI:
@@ -22,8 +22,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
-          cache: 'npm'
+          node-version: "22.x"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
