@@ -1,9 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { db } from '@/lib/db';
-
+import React, { useState } from "react";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { db } from "@/lib/db";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
@@ -42,10 +41,10 @@ function Login() {
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <GoogleLogin
         nonce={nonce}
-        onError={() => alert('Login failed')}
+        onError={() => alert("Login failed")}
         onSuccess={({ credential }) => {
           if (!credential) {
-            alert('認証情報の取得に失敗しました');
+            alert("認証情報の取得に失敗しました");
             return;
           }
 
@@ -58,7 +57,7 @@ function Login() {
               nonce,
             })
             .catch((err) => {
-              alert('Uh oh: ' + err.body?.message);
+              alert("Uh oh: " + err.body?.message);
             });
         }}
       />
