@@ -30,7 +30,7 @@ function UserInfo() {
 // 現状のところ特に問題はないので放置する。
 // 報告例: https://github.com/firebase/firebase-js-sdk/issues/6199
 function Login() {
-  const [nonce] = useState(crypto.randomUUID());
+  const [nonce] = useState(() => crypto.randomUUID());
 
   if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_NAME) {
     return <div>現在ログインは利用できません</div>;
