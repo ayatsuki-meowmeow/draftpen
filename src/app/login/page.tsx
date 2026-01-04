@@ -4,9 +4,8 @@ import React, { useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { db } from "@/lib/db";
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-
-const GOOGLE_CLIENT_NAME = process.env.GOOGLE_CLIENT_NAME;
+const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_NAME = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_NAME;
 
 function App() {
   return (
