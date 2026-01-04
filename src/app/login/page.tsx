@@ -40,9 +40,11 @@ function Login() {
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <GoogleLogin
         nonce={nonce}
+        // TODO: エラーハンドリングの改善
         onError={() => alert("Login failed")}
         onSuccess={({ credential }) => {
           if (!credential) {
+            // TODO: エラーハンドリングの改善
             alert("認証情報の取得に失敗しました");
             return;
           }
@@ -56,6 +58,7 @@ function Login() {
               nonce,
             })
             .catch((err) => {
+              // TODO: エラーハンドリングの改善
               alert("Uh oh: " + err.body?.message);
             });
         }}
