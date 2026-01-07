@@ -10,6 +10,7 @@ const _schema = i.schema({
     profiles: i.entity({
       name: i.string(),
       bio: i.string().optional(),
+      role: i.string(),
       createdAt: i.date(),
       updatedAt: i.date(),
     }),
