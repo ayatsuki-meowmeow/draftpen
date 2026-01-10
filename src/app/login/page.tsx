@@ -3,6 +3,10 @@
 import React, { useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { db } from "@/lib/db";
+import { signIn } from "@/apis/users";
+import { GoogleJwtPayload, Profile } from "@/types/user";
+import { createProfileForUser, getProfileByUserId } from "@/apis/profiles";
+import { jwtDecode } from "jwt-decode";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_NAME = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_NAME;
@@ -35,31 +39,44 @@ function Login() {
     return <div>現在ログインは利用できません</div>;
   }
 
+  async function handleLoginSuccess({
+    credential,
+    clientName,
+    nonce,
+  }: {
+    credential?: string;
+    clientName: string;
+    nonce: string;
+  }) {
+    if (!credential) {
+      // TODO: エラーハンドリングの改善
+      alert("認証情報の取得に失敗しました");
+      return;
+    }
+
+    const user = await signIn(clientName, credential, nonce);
+
+    const currentUserId = user.id;
+    const decoded: GoogleJwtPayload = jwtDecode(credential);
+    const currentUserName = decoded.name;
+    const profile: Profile | null = await getProfileByUserId(currentUserId);
+    if (!profile) {
+      await createProfileForUser(currentUserId, currentUserName);
+    }
+  }
+
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <GoogleLogin
         nonce={nonce}
         // TODO: エラーハンドリングの改善
         onError={() => alert("Login failed")}
-        onSuccess={({ credential }) => {
-          if (!credential) {
-            // TODO: エラーハンドリングの改善
-            alert("認証情報の取得に失敗しました");
-            return;
-          }
-
-          db.auth
-            .signInWithIdToken({
-              clientName: GOOGLE_CLIENT_NAME,
-              idToken: credential,
-              // GoogleOAuthに渡したnonceと同じ値を渡す必要がある
-              // nonceが同一かどうかをInstant側で検証している
-              nonce,
-            })
-            .catch((err) => {
-              // TODO: エラーハンドリングの改善
-              alert("Uh oh: " + err.body?.message);
-            });
+        onSuccess={async ({ credential }) => {
+          await handleLoginSuccess({
+            credential,
+            clientName: GOOGLE_CLIENT_NAME,
+            nonce,
+          });
         }}
       />
     </GoogleOAuthProvider>
