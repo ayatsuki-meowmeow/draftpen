@@ -13,3 +13,18 @@ export type RawProfile = Omit<
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type GoogleJwtPayload = {
+  iss: string;
+  sub: string;
+  aud: string;
+  exp: number;
+  iat: number;
+  email: string;
+  email_verified: boolean;
+  name: string;
+  picture?: string;
+  given_name?: string;
+  family_name?: string;
+  locale?: string;
+}
