@@ -1,7 +1,8 @@
 "use client";
 
-import { profileQuery, getFirstProfile } from "@/apis/profiles";
+import { profileQuery } from "@/apis/auth/profiles";
 import { db } from "@/lib/db";
+import { getFirstProfile } from "@/services/auth/profiles";
 import { Profile } from "@/types/user";
 
 export default function UserInfo() {

@@ -1,10 +1,8 @@
 "use client";
 
-import {
-  createProfileForUser,
-} from "@/apis/profiles";
-import { signIn } from "@/apis/users";
+import { signIn } from "@/apis/auth/users";
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_NAME } from "@/lib/constants";
+import { createProfile } from "@/services/auth/profiles";
 import { GoogleJwtPayload } from "@/types/user";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
@@ -38,9 +36,19 @@ export default function Login() {
     const user = await signIn(clientName, credential, nonce);
 
     const currentUserId = user.id;
+    const currentUserEmail: string | null | undefined = user.email;
+    if (!currentUserEmail) {
+      console.error("User email is not available");
+      return;
+    }
+
     const decoded: GoogleJwtPayload = jwtDecode(credential);
     const currentUserName = decoded.name;
-    await createProfileForUser(currentUserId, currentUserName);
+    await createProfile(
+      currentUserId,
+      currentUserEmail,
+      currentUserName,
+    );
   }
 
   return (
