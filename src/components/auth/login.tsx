@@ -44,11 +44,7 @@ export default function Login() {
 
     const decoded: GoogleJwtPayload = jwtDecode(credential);
     const currentUserName = decoded.name;
-    await createProfile(
-      currentUserId,
-      currentUserEmail,
-      currentUserName,
-    );
+    await createProfile(currentUserId, currentUserEmail, currentUserName);
   }
 
   return (

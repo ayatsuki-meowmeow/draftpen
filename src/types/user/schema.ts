@@ -27,4 +27,4 @@ export type GoogleJwtPayload = {
   given_name?: string;
   family_name?: string;
   locale?: string;
-}
+};

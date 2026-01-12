@@ -1,7 +1,11 @@
 import { db } from "@/lib/db";
 import { User } from "@instantdb/react";
 
-export async function signIn(clientName: string, idToken: string, nonce: string): Promise<User> {
+export async function signIn(
+  clientName: string,
+  idToken: string,
+  nonce: string,
+): Promise<User> {
   const res = await db.auth
     .signInWithIdToken({
       clientName,
