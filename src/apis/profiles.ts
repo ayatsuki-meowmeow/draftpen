@@ -1,10 +1,32 @@
 import { db } from "@/lib/db";
 import { Profile, RawProfile } from "@/types/user";
 
+export const profileQuery = {
+  byUserId: (userId: string) => ({
+    profiles: {
+      $: {
+        where: {
+          "user.id": userId,
+        },
+      },
+    },
+  }),
+};
+
+async function isExistingProfile(userId: string): Promise<boolean> {
+  const result = await db.queryOnce(profileQuery.byUserId(userId));
+  return result.data.profiles.length > 0;
+}
+
 export async function createProfileForUser(
   userId: string,
   name: string,
 ): Promise<void> {
+  const isExist: boolean = await isExistingProfile(userId);
+  if (isExist) {
+    return;
+  }
+
   await db.transact(
     db.tx.profiles[userId]
       .create({
@@ -26,27 +48,10 @@ function mapProfile(raw: RawProfile): Profile {
   };
 }
 
-export async function getProfileByUserId(
-  userId: string,
-): Promise<Profile | null> {
-  const query = {
-    profiles: {
-      $: {
-        where: {
-          "user.id": userId,
-        },
-      },
-    },
-  };
-
-  try {
-    const resultRaw = await db.queryOnce(query);
-    const rawProfile: RawProfile = resultRaw.data.profiles[0];
-    if (!rawProfile) {
-      return null;
-    }
-    return mapProfile(rawProfile);
-  } catch (error) {
-    throw new Error(`Error fetching profile: ${error}`);
+export function getFirstProfile(profiles: RawProfile[]): Profile | null {
+  if (profiles.length === 0) {
+    return null;
   }
+
+  return mapProfile(profiles[0]);
 }

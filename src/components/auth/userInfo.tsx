@@ -1,10 +1,27 @@
-import { getProfileByUserId } from "@/apis/profiles";
+"use client";
+
+import { profileQuery, getFirstProfile } from "@/apis/profiles";
 import { db } from "@/lib/db";
 import { Profile } from "@/types/user";
 
-export default async function userInfo() {
-  const user = db.useUser();
-  const profile: Profile | null = await getProfileByUserId(user.id);
+export default function UserInfo() {
+  const userId: string = db.useUser().id;
+
+  const { data, isLoading, error } = db.useQuery(profileQuery.byUserId(userId));
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>プロフィール情報の取得中にエラーが発生しました。</div>;
+  }
+
+  if (!data) {
+    return <div>プロフィール情報の取得に失敗しました。</div>;
+  }
+
+  const profile: Profile | null = getFirstProfile(data.profiles);
 
   if (!profile) {
     return <div>プロフィール情報の取得に失敗しました。</div>;

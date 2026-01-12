@@ -1,14 +1,14 @@
 "use client";
 
-import { createProfileForUser, getProfileByUserId } from "@/apis/profiles";
+import {
+  createProfileForUser,
+} from "@/apis/profiles";
 import { signIn } from "@/apis/users";
-import { GoogleJwtPayload, Profile } from "@/types/user";
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_NAME } from "@/lib/constants";
+import { GoogleJwtPayload } from "@/types/user";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
-
-const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-const GOOGLE_CLIENT_NAME = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_NAME;
 
 // NOTE: ログイン時にコンソール上でCOOPエラーの警告が出るが、ログイン自体は成功する。
 // この問題はポップアップを使ってGoogleOAuth認証をする際に発生する既知の事象。
@@ -40,10 +40,7 @@ export default function Login() {
     const currentUserId = user.id;
     const decoded: GoogleJwtPayload = jwtDecode(credential);
     const currentUserName = decoded.name;
-    const profile: Profile | null = await getProfileByUserId(currentUserId);
-    if (!profile) {
-      await createProfileForUser(currentUserId, currentUserName);
-    }
+    await createProfileForUser(currentUserId, currentUserName);
   }
 
   return (
@@ -53,6 +50,11 @@ export default function Login() {
         // TODO: エラーハンドリングの改善
         onError={() => alert("Login failed")}
         onSuccess={async ({ credential }) => {
+          if (!GOOGLE_CLIENT_NAME) {
+            console.error("GOOGLE_CLIENT_NAME is not defined");
+            return;
+          }
+
           await handleLoginSuccess({
             credential,
             clientName: GOOGLE_CLIENT_NAME,

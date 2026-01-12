@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { db } from "@/lib/db";
 import UserInfo from "@/components/auth/userInfo";
