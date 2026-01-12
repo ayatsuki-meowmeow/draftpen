@@ -33,7 +33,7 @@ function App() {
       </div>
       <div className="text-xs text-center">
         <span>ログインは</span>
-        <a className="text-blue-500 underline ml-1" href="/login">
+        <a className="text-blue-500 underline ml-1" href="/auth">
           こちら
         </a>
       </div>
