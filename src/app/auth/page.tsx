@@ -24,9 +24,15 @@ function App() {
   );
 }
 
-function UserInfo() {
+async function UserInfo(){
   const user = db.useUser();
-  return <h1>Hello {user.email}!</h1>;
+  const profile: Profile | null = await getProfileByUserId(user.id);
+  return (
+    <>
+      <h1>Hello {profile?.name}!</h1>
+      <span>Your Role is {profile?.role}</span>
+    </>
+  );
 }
 
 // NOTE: ログイン時にコンソール上でCOOPエラーの警告が出るが、ログイン自体は成功する。
