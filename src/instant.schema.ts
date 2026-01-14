@@ -9,8 +9,8 @@ const _schema = i.schema({
     }),
     profiles: i.entity({
       name: i.string(),
-      userId: i.string().indexed(),
       bio: i.string().optional(),
+      role: i.string(),
       createdAt: i.date(),
       updatedAt: i.date(),
     }),
@@ -18,7 +18,6 @@ const _schema = i.schema({
       slug: i.string().unique().indexed(),
       title: i.string().indexed(),
       content: i.string(),
-      authorId: i.string().indexed(),
       status: i.string().indexed(),
       publishedAt: i.date().optional(),
       createdAt: i.date(),
