@@ -2,7 +2,7 @@
 
 import { signIn } from "@/apis/auth/users";
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_NAME } from "@/lib/constants";
-import { createProfile } from "@/services/auth/profiles";
+import { createProfile } from "@/services/auth/serverActions";
 import { GoogleJwtPayload } from "@/types/user";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
