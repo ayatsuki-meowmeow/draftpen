@@ -1,6 +1,9 @@
 "use server";
 
-import { createProfileForUser, isExistingProfile } from "@/apis/auth/serverProfiles";
+import {
+  createProfileForUser,
+  isExistingProfile,
+} from "@/apis/auth/serverProfiles";
 import { serverDb } from "@/lib/serverDb";
 import { userRole } from "@/types/user";
 
@@ -16,7 +19,7 @@ export async function createProfile(
   userRefreshToken: string,
   name: string,
 ): Promise<void> {
-  const user = await serverDb.auth.getUser({refresh_token: userRefreshToken});
+  const user = await serverDb.auth.getUser({ refresh_token: userRefreshToken });
 
   if (!user) {
     throw new Error("ユーザー情報の取得に失敗しました");

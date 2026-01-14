@@ -39,12 +39,15 @@ export default function Login() {
     const decoded: GoogleJwtPayload = jwtDecode(credential);
     const userName = decoded.name;
 
-
     try {
       await createProfile(userRefreshToken, userName);
     } catch (error) {
       console.error("Error creating profile:", error);
-      alert(error instanceof Error ? error.message : "プロフィールの作成に失敗しました");
+      alert(
+        error instanceof Error
+          ? error.message
+          : "プロフィールの作成に失敗しました",
+      );
     }
   }
 
