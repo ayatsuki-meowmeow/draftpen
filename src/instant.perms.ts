@@ -6,7 +6,7 @@ const rules = {
   profiles: {
     allow: {
       view: "true",
-      create: "isOwner",
+      create: "false", // サーバーサイドでのみ作成可能とするため、クライアントサイドではfalseに設定
       update: "isOwner",
       delete: "isOwner",
     },

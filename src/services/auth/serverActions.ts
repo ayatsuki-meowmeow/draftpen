@@ -8,8 +8,15 @@ import { serverDb } from "@/lib/serverDb";
 import { userRole } from "@/types/user";
 
 async function isAdmin(userEmail: string): Promise<boolean> {
-  return process.env.ADMIN_USER_EMAILS
-    ? process.env.ADMIN_USER_EMAILS.split(",")
+  const adminEmails = process.env.ADMIN_USER_EMAILS;
+
+  if (!adminEmails) {
+    // adminEmailsの存在をユーザーは知ることができないため、エラーメッセージは一般的なものにする
+    throw new Error("現在新規ユーザーの作成はできません");
+  }
+
+  return adminEmails
+    ? adminEmails.split(",")
         .map((email) => email.trim())
         .includes(userEmail)
     : false;
@@ -38,13 +45,6 @@ export async function createProfile(
   }
 
   const isAdminUser: boolean = await isAdmin(userEmail);
-
-  console.log("Creating profile for user:", {
-    userId,
-    userEmail,
-    name,
-    isAdminUser,
-  });
 
   const role: userRole = isAdminUser ? "admin" : "viewer";
 

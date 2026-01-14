@@ -2,6 +2,7 @@
 
 import { signIn } from "@/apis/auth/users";
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_NAME } from "@/lib/constants";
+import { db } from "@/lib/db";
 import { createProfile } from "@/services/auth/serverActions";
 import { GoogleJwtPayload } from "@/types/user";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
@@ -48,6 +49,8 @@ export default function Login() {
           ? error.message
           : "プロフィールの作成に失敗しました",
       );
+
+      await db.auth.signOut();
     }
   }
 
