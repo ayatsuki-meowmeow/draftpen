@@ -40,7 +40,12 @@ export default function Login() {
     const userName = decoded.name;
 
 
-    await createProfile(userRefreshToken, userName);
+    try {
+      await createProfile(userRefreshToken, userName);
+    } catch (error) {
+      console.error("Error creating profile:", error);
+      alert(error instanceof Error ? error.message : "プロフィールの作成に失敗しました");
+    }
   }
 
   return (
