@@ -16,7 +16,8 @@ async function isAdmin(userEmail: string): Promise<boolean> {
   }
 
   return adminEmails
-    ? adminEmails.split(",")
+    ? adminEmails
+        .split(",")
         .map((email) => email.trim())
         .includes(userEmail)
     : false;
