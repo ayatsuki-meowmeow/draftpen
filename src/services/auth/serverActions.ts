@@ -1,6 +1,7 @@
 "use server";
 
 import { createProfileForUser, isExistingProfile } from "@/apis/auth/serverProfiles";
+import { serverDb } from "@/lib/serverDb";
 import { userRole } from "@/types/user";
 
 async function isAdmin(userEmail: string): Promise<boolean> {
@@ -12,10 +13,22 @@ async function isAdmin(userEmail: string): Promise<boolean> {
 }
 
 export async function createProfile(
-  userId: string,
-  userEmail: string,
+  userRefreshToken: string,
   name: string,
 ): Promise<void> {
+  const user = await serverDb.auth.getUser({refresh_token: userRefreshToken});
+
+  if (!user) {
+    throw new Error("ユーザー情報の取得に失敗しました");
+  }
+
+  const userId: string = user.id;
+  const userEmail: string = user.email || "";
+
+  if (!userEmail) {
+    throw new Error("ユーザーのメールアドレスが取得できませんでした");
+  }
+
   const isExist: boolean = await isExistingProfile(userId);
   if (isExist) {
     return;

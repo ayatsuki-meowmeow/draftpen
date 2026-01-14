@@ -34,17 +34,13 @@ export default function Login() {
     }
 
     const user = await signIn(clientName, credential, nonce);
-
-    const currentUserId = user.id;
-    const currentUserEmail: string | null | undefined = user.email;
-    if (!currentUserEmail) {
-      console.error("User email is not available");
-      return;
-    }
+    const userRefreshToken = user.refresh_token;
 
     const decoded: GoogleJwtPayload = jwtDecode(credential);
-    const currentUserName = decoded.name;
-    await createProfile(currentUserId, currentUserEmail, currentUserName);
+    const userName = decoded.name;
+
+
+    await createProfile(userRefreshToken, userName);
   }
 
   return (
