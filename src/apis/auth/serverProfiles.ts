@@ -3,6 +3,7 @@
 import { serverDb } from "@/lib/serverDb";
 import { userRole } from "@/types/user";
 import { profileQuery } from "./profiles";
+import { id } from "@instantdb/react";
 
 export async function isExistingProfile(userId: string): Promise<boolean> {
   const result = await serverDb.query(profileQuery.byUserId(userId));
@@ -15,7 +16,7 @@ export async function createProfileForUser(
   name: string,
 ): Promise<void> {
   await serverDb.transact(
-    serverDb.tx.profiles[userId]
+    serverDb.tx.profiles[id()]
       .create({
         name,
         role: role,
