@@ -5,9 +5,7 @@ export const config = {
 }
 
 export function proxy(req: NextRequest) {
-  console.log("Basic Auth Middleware Invoked");
   const basicAuth = req.headers.get("authorization");
-  console.log("Authorization Header:", basicAuth);
   const url = req.nextUrl;
 
   if (basicAuth) {
