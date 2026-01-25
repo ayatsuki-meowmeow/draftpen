@@ -1,7 +1,13 @@
+import { ValueOf } from "@/utils";
 import { RawProfile } from "./schema";
 
-export type userRole = "admin" | "viewer";
+export const UserRole = {
+  ADMIN: "admin",
+  VIEWER: "viewer",
+} as const;
+
+export type UserRole = ValueOf<typeof UserRole>;
 
 export type Profile = Omit<RawProfile, "role"> & {
-  role: userRole;
+  role: UserRole;
 };
