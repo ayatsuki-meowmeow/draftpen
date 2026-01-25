@@ -1,9 +1,9 @@
 "use server";
 
 import { serverDb } from "@/lib/serverDb";
-import { userRole } from "@/types/user";
 import { profileQuery } from "./profiles";
 import { id } from "@instantdb/react";
+import { UserRole } from "@/types/user";
 
 export async function isExistingProfile(userId: string): Promise<boolean> {
   const result = await serverDb.query(profileQuery.byUserId(userId));
@@ -12,7 +12,7 @@ export async function isExistingProfile(userId: string): Promise<boolean> {
 
 export async function createProfileForUser(
   userId: string,
-  role: userRole,
+  role: UserRole,
   name: string,
 ): Promise<void> {
   await serverDb.transact(

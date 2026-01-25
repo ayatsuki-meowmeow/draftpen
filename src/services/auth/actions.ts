@@ -1,10 +1,9 @@
-import { getCurrentUserProfile } from "@/apis/auth/profiles";
-import { Profile, RawProfile, userRole } from "@/types/user";
+import { Profile, RawProfile, UserRole } from "@/types/user";
 
 function mapProfile(raw: RawProfile): Profile {
   return {
     ...raw,
-    role: raw.role as userRole,
+    role: raw.role as UserRole,
   };
 }
 
@@ -16,13 +15,16 @@ export function getFirstProfile(profiles: RawProfile[]): Profile | null {
   return mapProfile(profiles[0]);
 }
 
-export async function getProfile(userId: string): Promise<Profile> {
-  const RawProfile = await getCurrentUserProfile(userId);
-  const profile = getFirstProfile(RawProfile);
+export function getProfile(rawProfiles: RawProfile[]): Profile {
+  const profile = getFirstProfile(rawProfiles);
 
   if (!profile) {
     throw new Error("プロフィール情報の取得に失敗しました");
   }
 
   return profile;
+}
+
+export function isAdminProfile(profile: Profile): boolean {
+  return profile.role === UserRole.ADMIN;
 }
