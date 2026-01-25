@@ -6,9 +6,9 @@ export const config = {
 
 export function proxy(req: NextRequest) {
   const basicAuth = req.headers.get("authorization");
-  const url = req.nextUrl;
 
   if (basicAuth) {
+    console.log("Found Authorization header");
     const authValue = basicAuth.split(" ")[1];
     const [username, password] = atob(authValue).split(":");
 
@@ -19,6 +19,11 @@ export function proxy(req: NextRequest) {
       return NextResponse.next();
     }
   }
-  url.pathname = "/admin/basic-auth";
-  return NextResponse.rewrite(url);
+
+  return new NextResponse("Auth Required.", {
+		status: 401,
+		headers: {
+			"WWW-Authenticate": 'Basic realm="Secure Area"',
+		},
+	});
 }
