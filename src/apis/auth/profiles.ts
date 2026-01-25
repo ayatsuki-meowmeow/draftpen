@@ -1,6 +1,3 @@
-import { db } from "@/lib/db";
-import { RawProfile } from "@/types/user";
-
 export const profileQuery = {
   byUserId: (userId: string) => ({
     profiles: {
@@ -12,8 +9,3 @@ export const profileQuery = {
     },
   }),
 };
-
-export async function getCurrentUserProfile(userId: string): Promise<RawProfile[]> {
-  const query = profileQuery.byUserId(userId);
-  return (await db.queryOnce(query)).data.profiles;
-}
