@@ -2,7 +2,7 @@
 
 import { profileQuery } from "@/apis/auth/profiles";
 import { db } from "@/lib/db";
-import { getFirstProfile } from "@/services/auth/profiles";
+import { getFirstProfile } from "@/services/auth/actions";
 import { Profile } from "@/types/user";
 
 export default function UserInfo() {
