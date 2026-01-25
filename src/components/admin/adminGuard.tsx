@@ -1,27 +1,37 @@
+"use client";
+
 import { profileQuery } from "@/apis/auth/profiles";
 import { db } from "@/lib/db";
 import { getProfile, isAdminProfile } from "@/services/auth/actions";
 import { Profile } from "@/types/user";
-import { User } from "@instantdb/react";
 
-export async function adminGuard({ children }: { children: React.ReactNode }) {
-  const currentUser: User = db.useUser();
+export default function AdminGuard({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { isLoading: isLoadingUser, error: errorUser, user } = db.useAuth();
+
   const {
     isLoading: isLoadingRawProfiles,
     error: errorRawProfiles,
     data: rawProfiles,
-  } = db.useQuery(profileQuery.byUserId(currentUser.id));
+  } = db.useQuery(user ? profileQuery.byUserId(user.id) : null);
 
-  if (isLoadingRawProfiles) {
+  if (isLoadingUser || isLoadingRawProfiles) {
     return <div>Loading...</div>;
   }
 
-  if (errorRawProfiles) {
-    return <div>プロフィール情報の取得中にエラーが発生しました。</div>;
+  if (errorUser || errorRawProfiles) {
+    return <div>ユーザー情報の取得中にエラーが発生しました。</div>;
+  }
+
+  if (!user) {
+    return <div>ログインが必要です</div>;
   }
 
   if (!rawProfiles) {
-    return <div>プロフィール情報の取得に失敗しました。</div>;
+    return <div>ユーザー情報の取得に失敗しました。</div>;
   }
 
   const currentProfile: Profile = getProfile(rawProfiles.profiles);
