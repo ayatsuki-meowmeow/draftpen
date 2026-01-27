@@ -55,24 +55,26 @@ export default function Login() {
   }
 
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      <GoogleLogin
-        nonce={nonce}
-        // TODO: エラーハンドリングの改善
-        onError={() => alert("Login failed")}
-        onSuccess={async ({ credential }) => {
-          if (!GOOGLE_CLIENT_NAME) {
-            console.error("GOOGLE_CLIENT_NAME is not defined");
-            return;
-          }
+    <div className="flex justify-center p-4">
+      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+        <GoogleLogin
+          nonce={nonce}
+          // TODO: エラーハンドリングの改善
+          onError={() => alert("Login failed")}
+          onSuccess={async ({ credential }) => {
+            if (!GOOGLE_CLIENT_NAME) {
+              console.error("GOOGLE_CLIENT_NAME is not defined");
+              return;
+            }
 
-          await handleLoginSuccess({
-            credential,
-            clientName: GOOGLE_CLIENT_NAME,
-            nonce,
-          });
-        }}
-      />
-    </GoogleOAuthProvider>
+            await handleLoginSuccess({
+              credential,
+              clientName: GOOGLE_CLIENT_NAME,
+              nonce,
+            });
+          }}
+        />
+      </GoogleOAuthProvider>
+    </div>
   );
 }
