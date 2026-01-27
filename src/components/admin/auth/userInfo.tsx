@@ -1,6 +1,7 @@
 "use client";
 
 import { profileQuery } from "@/apis/auth/profiles";
+import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { getFirstProfile } from "@/services/auth/actions";
 import { Profile } from "@/types/user";
@@ -29,9 +30,9 @@ export default function UserInfo() {
   }
 
   return (
-    <div>
-      <h1>Hello {profile.name}!</h1>
-      <span>Your Role is {profile.role}</span>
+    <div className="flex flex-col p-4 gap-2">
+      <h1>Hello {profile.name}! Your Role is {profile.role}</h1>
+      <Button onClick={() => {db.auth.signOut()}} className="w-40">ログアウト</Button>
     </div>
   );
 }
