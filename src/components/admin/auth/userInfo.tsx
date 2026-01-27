@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { getFirstProfile } from "@/services/auth/actions";
 import { Profile } from "@/types/user";
+import Link from "next/link";
 
 export default function UserInfo() {
   const userId: string = db.useUser().id;
@@ -38,9 +39,13 @@ export default function UserInfo() {
         onClick={() => {
           db.auth.signOut();
         }}
+        variant="secondary"
         className="w-40"
       >
         ログアウト
+      </Button>
+      <Button variant="outline" className="w-120 h-60" asChild>
+        <Link href="/admin/article">記事管理画面へ</Link>
       </Button>
     </div>
   );
