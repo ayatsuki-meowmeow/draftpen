@@ -31,8 +31,17 @@ export default function UserInfo() {
 
   return (
     <div className="flex flex-col p-4 gap-2 justify-center items-center">
-      <h1>Hello {profile.name}! Your Role is {profile.role}</h1>
-      <Button onClick={() => {db.auth.signOut()}} className="w-40">ログアウト</Button>
+      <h1>
+        Hello {profile.name}! Your Role is {profile.role}
+      </h1>
+      <Button
+        onClick={() => {
+          db.auth.signOut();
+        }}
+        className="w-40"
+      >
+        ログアウト
+      </Button>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export const config = {
-  matcher: ["/admin" ,"/admin/:path*"],
-}
+  matcher: ["/admin", "/admin/:path*"],
+};
 
 export function proxy(req: NextRequest) {
   const basicAuth = req.headers.get("authorization");
@@ -21,9 +21,9 @@ export function proxy(req: NextRequest) {
   }
 
   return new NextResponse("Auth Required.", {
-		status: 401,
-		headers: {
-			"WWW-Authenticate": 'Basic realm="Secure Area"',
-		},
-	});
+    status: 401,
+    headers: {
+      "WWW-Authenticate": 'Basic realm="Secure Area"',
+    },
+  });
 }
