@@ -15,7 +15,6 @@ export function proxy(req: NextRequest) {
   const basicAuth = req.headers.get("authorization");
 
   if (basicAuth) {
-    console.log("Found Authorization header");
     const authValue = basicAuth.split(" ")[1];
     const [username, password] = atob(authValue).split(":");
 
