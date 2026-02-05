@@ -12,11 +12,15 @@ export default function AdminGuard({
 }) {
   const { isLoading: isLoadingUser, error: errorUser, user } = db.useAuth();
 
+  if (!user) {
+    return <div>ログインが必要です</div>;
+  }
+
   const {
     isLoading: isLoadingRawProfiles,
     error: errorRawProfiles,
     data: rawProfiles,
-  } = db.useQuery(user ? profileQuery.byUserId(user.id) : null);
+  } = db.useQuery(profileQuery.byUserId(user.id));
 
   if (isLoadingUser || isLoadingRawProfiles) {
     return <div>Loading...</div>;
@@ -24,10 +28,6 @@ export default function AdminGuard({
 
   if (errorUser || errorRawProfiles) {
     return <div>ユーザー情報の取得中にエラーが発生しました。</div>;
-  }
-
-  if (!user) {
-    return <div>ログインが必要です</div>;
   }
 
   if (!rawProfiles) {
