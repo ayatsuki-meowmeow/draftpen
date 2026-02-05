@@ -2,10 +2,10 @@
 
 import React from "react";
 import { db } from "@/lib/db";
-import UserInfo from "@/components/auth/userInfo";
-import Login from "@/components/auth/login";
+import UserInfo from "@/components/admin/auth/userInfo";
+import Login from "@/components/admin/auth/login";
 
-function App() {
+function AdminAuthPage() {
   return (
     <>
       <db.SignedIn>
@@ -18,4 +18,4 @@ function App() {
   );
 }
 
-export default App;
+export default AdminAuthPage;

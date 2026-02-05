@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/login",
+        source: "/admin/auth",
         headers: [
           {
             // GoogleOauthはポップアップを使うため、COOPヘッダーを追加してクロスオリジンのポップアップを許可する必要がある

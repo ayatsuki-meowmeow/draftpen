@@ -5,9 +5,9 @@ import {
   isExistingProfile,
 } from "@/apis/auth/serverProfiles";
 import { serverDb } from "@/lib/serverDb";
-import { userRole } from "@/types/user";
+import { UserRole } from "@/types/user";
 
-async function isAdmin(userEmail: string): Promise<boolean> {
+async function isAdminEmail(userEmail: string): Promise<boolean> {
   const adminEmails = process.env.ADMIN_USER_EMAILS;
 
   if (!adminEmails) {
@@ -45,9 +45,9 @@ export async function createProfile(
     return;
   }
 
-  const isAdminUser: boolean = await isAdmin(userEmail);
+  const isAdminUser: boolean = await isAdminEmail(userEmail);
 
-  const role: userRole = isAdminUser ? "admin" : "viewer";
+  const role: UserRole = isAdminUser ? UserRole.ADMIN : UserRole.VIEWER;
 
   await createProfileForUser(userId, role, name);
 }

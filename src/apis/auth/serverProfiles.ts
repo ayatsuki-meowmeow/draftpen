@@ -1,9 +1,9 @@
 "use server";
 
 import { serverDb } from "@/lib/serverDb";
-import { userRole } from "@/types/user";
 import { profileQuery } from "./profiles";
 import { id } from "@instantdb/react";
+import { UserRole } from "@/types/user";
 
 export async function isExistingProfile(userId: string): Promise<boolean> {
   const result = await serverDb.query(profileQuery.byUserId(userId));
@@ -12,14 +12,19 @@ export async function isExistingProfile(userId: string): Promise<boolean> {
 
 export async function createProfileForUser(
   userId: string,
-  role: userRole,
+  role: UserRole,
   name: string,
 ): Promise<void> {
+  const target = serverDb.tx.profiles[id()];
+  if (!target) {
+    throw new Error("target object is undefined");
+  }
+
   await serverDb.transact(
-    serverDb.tx.profiles[id()]
+    target
       .create({
         name,
-        role: role,
+        role,
         createdAt: new Date(),
         updatedAt: new Date(),
       })
