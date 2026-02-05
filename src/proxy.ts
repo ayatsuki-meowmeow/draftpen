@@ -16,6 +16,13 @@ export function proxy(req: NextRequest) {
 
   if (basicAuth) {
     const authValue = basicAuth.split(" ")[1];
+    if (!authValue) {
+      console.error("BASIC_AUTH has an error")
+      return new NextResponse("Service Unavailable", {
+        status: 503,
+      });
+    }
+
     const [username, password] = atob(authValue).split(":");
 
     if (
