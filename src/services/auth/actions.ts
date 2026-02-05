@@ -12,7 +12,12 @@ export function getFirstProfile(profiles: RawProfile[]): Profile | null {
     return null;
   }
 
-  return mapProfile(profiles[0]);
+  const firstProfile = profiles[0];
+  if (!firstProfile) {
+    throw new Error("profile is not found");
+  }
+
+  return mapProfile(firstProfile);
 }
 
 export function getProfile(rawProfiles: RawProfile[]): Profile {
