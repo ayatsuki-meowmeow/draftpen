@@ -47,7 +47,7 @@ export async function createProfile(
 
   const isAdminUser: boolean = await isAdminEmail(userEmail);
 
-  const role: UserRole = isAdminUser ? "admin" : "viewer";
+  const role: UserRole = isAdminUser ? UserRole.ADMIN : UserRole.VIEWER;
 
   await createProfileForUser(userId, role, name);
 }
