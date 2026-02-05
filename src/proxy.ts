@@ -5,6 +5,13 @@ export const config = {
 };
 
 export function proxy(req: NextRequest) {
+  if (!process.env.BASIC_AUTH_USERNAME || !process.env.BASIC_AUTH_PASSWORD) {
+    console.error("BASIC_AUTH credentials are not configured");
+    return new NextResponse("Service Unavailable", {
+      status: 503,
+    });
+  }
+
   const basicAuth = req.headers.get("authorization");
 
   if (basicAuth) {
