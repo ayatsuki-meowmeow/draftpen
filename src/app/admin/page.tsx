@@ -1,6 +1,6 @@
 import AdminGuard from "@/components/admin/adminGuard";
 
-function App() {
+function AdminPage() {
   return (
     <>
       <div className="flex flex-col text-center p-4">
@@ -15,4 +15,4 @@ function App() {
   );
 }
 
-export default App;
+export default AdminPage;

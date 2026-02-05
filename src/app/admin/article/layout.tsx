@@ -1,6 +1,6 @@
 import AdminGuard from "@/components/admin/adminGuard";
 
-export default function AdminArticlesLayout ({
+export default function AdminArticleLayout ({
   children,
 }: {
   children: React.ReactNode;
