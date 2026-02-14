@@ -42,7 +42,7 @@ const _schema = i.schema({
     },
     authorArticles: {
       forward: {
-        on: "articless",
+        on: "articles",
         has: "one",
         label: "author",
         onDelete: "cascade",
