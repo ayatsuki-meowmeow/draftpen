@@ -14,10 +14,12 @@ const _schema = i.schema({
       createdAt: i.date(),
       updatedAt: i.date(),
     }),
-    posts: i.entity({
+    articles: i.entity({
       slug: i.string().unique().indexed(),
+      draftTitle: i.string().indexed(),
       title: i.string().indexed(),
       content: i.string(),
+      draftContent: i.string(),
       status: i.string().indexed(),
       publishedAt: i.date().optional(),
       createdAt: i.date(),
@@ -38,9 +40,9 @@ const _schema = i.schema({
         label: "profile",
       },
     },
-    authorPosts: {
+    authorArticles: {
       forward: {
-        on: "posts",
+        on: "articles",
         has: "one",
         label: "author",
         onDelete: "cascade",
@@ -48,7 +50,7 @@ const _schema = i.schema({
       reverse: {
         on: "profiles",
         has: "many",
-        label: "posts",
+        label: "articles",
       },
     },
   },

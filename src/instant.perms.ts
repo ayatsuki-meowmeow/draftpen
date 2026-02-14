@@ -10,7 +10,21 @@ const rules = {
       update: "isOwner",
       delete: "isOwner",
     },
-    bind: ["isOwner", "auth.id != null && auth.id == data.user.id"],
+    bind: ["isOwner", "auth.id !== null && auth.id === data.user.id"],
+  },
+  articles: {
+    allow: {
+      view: "true",
+      create: "isOwner",
+      update: "isOwner",
+      delete: "isOwner",
+    },
+    fields: {
+      draftTitle: "isOwner",
+      draftContent: "isOwner",
+      status: "isOwner",
+    },
+    bind: ["isOwner", "auth.id !== null && auth.id === data.user.id"],
   },
 } satisfies InstantRules;
 
