@@ -20,6 +20,7 @@ const rules = {
       delete: "isOwner",
     },
     fields: {
+      draftTitle: "isOwner",
       draftContent: "isOwner",
       status: "isOwner",
     },
