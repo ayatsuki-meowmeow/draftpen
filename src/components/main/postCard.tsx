@@ -3,17 +3,16 @@ import {
   CardContent,
   CardDescription,
   CardFooter,
-  CardHeader,
   CardTitle,
 } from "../ui/card";
 
-export type postCardProps = {
+export type PostCardProps = {
   title: string;
   publishedAt: string;
   lastUpdatedAt: string;
 };
 
-export function PostCard({ title, publishedAt, lastUpdatedAt }: postCardProps) {
+export function PostCard({ title, publishedAt, lastUpdatedAt }: PostCardProps) {
   return (
     <Card>
       <CardContent>
