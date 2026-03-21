@@ -1,5 +1,8 @@
-export const mockArticles = [
+import { Article } from "@/types/article";
+
+export const mockArticles: Article[] = [
   {
+    id: "aaa",
     slug: "getting-started-with-instantdb",
     draftTitle: "InstantDB入門（下書き）",
     title: "InstantDB入門ガイド",
@@ -11,6 +14,7 @@ export const mockArticles = [
     updatedAt: new Date("2025-01-10T10:00:00Z"),
   },
   {
+    id: "2r3",
     slug: "react-best-practices",
     draftTitle: "Reactベストプラクティス（下書き）",
     title: "Reactベストプラクティスまとめ",
@@ -22,6 +26,7 @@ export const mockArticles = [
     updatedAt: new Date("2025-02-02T12:00:00Z"),
   },
   {
+    id: "ew",
     slug: "nextjs-routing-guide",
     draftTitle: "Next.jsルーティング（下書き）",
     title: "Next.jsルーティング完全ガイド",
@@ -33,6 +38,7 @@ export const mockArticles = [
     updatedAt: new Date("2025-02-15T11:00:00Z"),
   },
   {
+    id: "radf",
     slug: "typescript-tips",
     draftTitle: "TypeScript小ネタ（下書き）",
     title: "TypeScript Tips集",
@@ -44,6 +50,7 @@ export const mockArticles = [
     updatedAt: new Date("2025-03-01T09:00:00Z"),
   },
   {
+    id: "dfa",
     slug: "database-design-basics",
     draftTitle: "DB設計基礎（下書き）",
     title: "データベース設計の基本",
@@ -55,6 +62,7 @@ export const mockArticles = [
     updatedAt: new Date("2025-03-06T11:00:00Z"),
   },
   {
+    id: "fda",
     slug: "web-performance-optimization",
     draftTitle: "パフォーマンス改善（下書き）",
     title: "Webパフォーマンス最適化",
@@ -66,6 +74,7 @@ export const mockArticles = [
     updatedAt: new Date("2025-03-10T07:00:00Z"),
   },
   {
+    id: "cda",
     slug: "css-modern-layout",
     draftTitle: "CSSレイアウト（下書き）",
     title: "モダンCSSレイアウト入門",
@@ -77,6 +86,7 @@ export const mockArticles = [
     updatedAt: new Date("2025-03-12T08:00:00Z"),
   },
   {
+    id: "fdas",
     slug: "nodejs-api-design",
     draftTitle: "API設計（下書き）",
     title: "Node.js API設計ガイド",
@@ -88,6 +98,7 @@ export const mockArticles = [
     updatedAt: new Date("2025-03-16T10:00:00Z"),
   },
   {
+    id: "aaaaa",
     slug: "testing-strategies",
     draftTitle: "テスト戦略（下書き）",
     title: "フロントエンドのテスト戦略",
@@ -99,6 +110,7 @@ export const mockArticles = [
     updatedAt: new Date("2025-03-18T06:00:00Z"),
   },
   {
+    id: "fdaxxx",
     slug: "auth-implementation",
     draftTitle: "認証実装（下書き）",
     title: "認証機能の実装方法",
