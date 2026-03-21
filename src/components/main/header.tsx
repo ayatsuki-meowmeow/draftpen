@@ -1,7 +1,7 @@
-export function Header () {
+export function Header() {
   return (
-    <div className="w-full g-4 text-left">
-      <span>日々、駄文。</span>
+    <div className="w-full g-4 text-center font-bold text-3xl">
+      <h1>日々、駄文。</h1>
     </div>
-  ); 
+  );
 }

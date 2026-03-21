@@ -3,10 +3,11 @@
 function App() {
   return (
     <div className="font-mono min-h-screen flex justify-center items-center flex-col space-y-4">
-      <div className="text-xs text-gray-500">
-      </div>
       <h2 className="tracking-wide text-5xl text-gray-300">todos</h2>
       <div className="border border-gray-300 max-w-xs w-full">
+        {/* <TodoForm todos={todos} />
+        <TodoList todos={todos} />
+        <ActionBar todos={todos} /> */}
       </div>
       <div className="text-xs text-center">
         <span>ログインは</span>
