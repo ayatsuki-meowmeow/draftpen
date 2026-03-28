@@ -7,9 +7,9 @@ import { convertDateToString } from "@/utils";
 
 function App() {
   return (
-    <div className="font-mono min-h-screen flex justify-center items-center flex-col space-y-4">
-      <h2 className="tracking-wide text-5xl text-gray-300">todos</h2>
-      <div className="border border-gray-300 max-w-xs w-full">
+    <div className="font-mono min-h-screen flex flex-col pt-12 px-8 space-y-6">
+      <h2 className="tracking-wide text-5xl text-gray-700">記事一覧</h2>
+      <div className="grid grid-cols-4 gap-6">
         {mockArticles.filter(isPublished).map((object) => {
           return PostCard({
             id: object.id,
