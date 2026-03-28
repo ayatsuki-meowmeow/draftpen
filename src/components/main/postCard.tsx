@@ -7,14 +7,20 @@ import {
 } from "../ui/card";
 
 export type PostCardProps = {
+  id: string;
   title: string;
   publishedAt: string;
   lastUpdatedAt: string;
 };
 
-export function PostCard({ title, publishedAt, lastUpdatedAt }: PostCardProps) {
+export function PostCard({
+  id,
+  title,
+  publishedAt,
+  lastUpdatedAt,
+}: PostCardProps) {
   return (
-    <Card>
+    <Card key={id}>
       <CardContent>
         <CardTitle>{title}</CardTitle>
       </CardContent>
