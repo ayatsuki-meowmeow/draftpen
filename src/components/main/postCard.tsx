@@ -20,7 +20,7 @@ export function PostCard({
   lastUpdatedAt,
 }: PostCardProps) {
   return (
-    <Card key={id} >
+    <Card key={id}>
       <CardContent className="h-12">
         <CardTitle>{title}</CardTitle>
       </CardContent>
