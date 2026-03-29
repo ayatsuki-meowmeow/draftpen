@@ -11,23 +11,41 @@ export default function AdminGuard({
 }: {
   children: React.ReactNode;
 }) {
-  const { isLoading: isLoadingUser, error: errorUser, user } = db.useAuth();
+  const { isLoading, error, user } = db.useAuth();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>ユーザー情報の取得中にエラーが発生しました。</div>;
+  }
 
   if (!user) {
     return <div>ログインが必要です</div>;
   }
 
-  const {
-    isLoading: isLoadingRawProfiles,
-    error: errorRawProfiles,
-    data: rawProfiles,
-  } = db.useQuery(profileQuery.byUserId(user.id));
+  return <AdminGuardInner userId={user.id}>{children}</AdminGuardInner>;
+}
 
-  if (isLoadingUser || isLoadingRawProfiles) {
+function AdminGuardInner({
+  userId,
+  children,
+}: {
+  userId: string;
+  children: React.ReactNode;
+}) {
+  const {
+    isLoading,
+    error,
+    data: rawProfiles,
+  } = db.useQuery(profileQuery.byUserId(userId));
+
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (errorUser || errorRawProfiles) {
+  if (error) {
     return <div>ユーザー情報の取得中にエラーが発生しました。</div>;
   }
 
@@ -38,9 +56,8 @@ export default function AdminGuard({
   const currentProfile: Profile = getProfile(
     rawProfiles.profiles.map(toRawProfile),
   );
-  const isAdmin: boolean = isAdminProfile(currentProfile);
 
-  if (!isAdmin) {
+  if (!isAdminProfile(currentProfile)) {
     return <div>管理者権限が必要です</div>;
   }
 
