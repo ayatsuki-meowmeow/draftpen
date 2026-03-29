@@ -20,14 +20,14 @@ export function PostCard({
   lastUpdatedAt,
 }: PostCardProps) {
   return (
-    <Card key={id}>
-      <CardContent>
+    <Card key={id} >
+      <CardContent className="h-12">
         <CardTitle>{title}</CardTitle>
       </CardContent>
       <CardFooter>
         <CardDescription>
-          公開日: {publishedAt}
-          最終更新日: {lastUpdatedAt}
+          <p>公開日: {publishedAt}</p>
+          <p>最終更新日: {lastUpdatedAt}</p>
         </CardDescription>
       </CardFooter>
     </Card>
