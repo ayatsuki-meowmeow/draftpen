@@ -3,7 +3,7 @@
 import { profileQuery } from "@/apis/auth/profiles";
 import { db } from "@/lib/db";
 import { getProfile, isAdminProfile } from "@/services/auth/actions";
-import { Profile } from "@/types/user";
+import { Profile, RawProfile } from "@/types/user";
 
 export default function AdminGuard({
   children,
@@ -34,7 +34,9 @@ export default function AdminGuard({
     return <div>ユーザー情報の取得に失敗しました。</div>;
   }
 
-  const currentProfile: Profile = getProfile(rawProfiles.profiles);
+  const currentProfile: Profile = getProfile(
+    rawProfiles.profiles as RawProfile[],
+  );
   const isAdmin: boolean = isAdminProfile(currentProfile);
 
   if (!isAdmin) {

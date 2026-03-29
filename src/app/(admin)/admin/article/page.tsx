@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { mockArticles } from "@/mocks/articles";
+import { Article } from "@/types/article";
 import { USE_MOCK } from "@/lib/constants";
 import {
   Table,
@@ -20,12 +21,12 @@ export default function AdminArticlePage() {
   if (!USE_MOCK && error)
     return <div className="p-4">エラー: {error.message}</div>;
 
-  const rawArticles = USE_MOCK ? mockArticles : (data?.articles ?? []);
+  const rawArticles = USE_MOCK
+    ? mockArticles
+    : ((data?.articles ?? []) as Article[]);
 
   const articles = [...rawArticles].sort((a, b) => {
-    const aTime = a.updatedAt instanceof Date ? a.updatedAt.getTime() : 0;
-    const bTime = b.updatedAt instanceof Date ? b.updatedAt.getTime() : 0;
-    return bTime - aTime;
+    return b.updatedAt - a.updatedAt;
   });
 
   return (
@@ -50,13 +51,11 @@ export default function AdminArticlePage() {
                 </Link>
               </TableCell>
               <TableCell>
-                {article.updatedAt instanceof Date
-                  ? article.updatedAt.toLocaleDateString("ja-JP")
-                  : "—"}
+                {new Date(article.updatedAt).toLocaleDateString("ja-JP")}
               </TableCell>
               <TableCell>
-                {article.publishedAt instanceof Date
-                  ? article.publishedAt.toLocaleDateString("ja-JP")
+                {article.publishedAt != null
+                  ? new Date(article.publishedAt).toLocaleDateString("ja-JP")
                   : "非公開"}
               </TableCell>
             </TableRow>

@@ -5,11 +5,9 @@ export type Article = Omit<
   InstaQLEntity<AppSchema, "articles">,
   "publishedAt" | "createdAt" | "updatedAt"
 > & {
-  publishedAt?: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  publishedAt?: number;
+  createdAt: number;
+  updatedAt: number;
 };
 
-export type PublishedArticle = Article & {
-  publishedAt: Date;
-};
+export type PublishedArticle = Article & { publishedAt: number };
