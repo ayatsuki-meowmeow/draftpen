@@ -4,8 +4,8 @@ import { PostCard } from "@/components/main/postCard";
 import { db } from "@/lib/db";
 import { USE_MOCK } from "@/lib/constants";
 import { mockArticles } from "@/mocks/articles";
-import { Article } from "@/types/article";
 import { isPublished } from "@/services/aritcle/actions";
+import { toArticle } from "@/repositories/article";
 import { convertDateToString } from "@/utils";
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
     return <div className="p-4">エラー: {error.message}</div>;
 
   const articles = (
-    USE_MOCK ? mockArticles : ((data?.articles ?? []) as Article[])
+    USE_MOCK ? mockArticles : (data?.articles ?? []).map(toArticle)
   ).filter(isPublished);
 
   return (

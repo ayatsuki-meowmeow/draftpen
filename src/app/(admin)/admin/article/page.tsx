@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { mockArticles } from "@/mocks/articles";
-import { Article } from "@/types/article";
+import { toArticle } from "@/repositories/article";
 import { USE_MOCK } from "@/lib/constants";
 import {
   Table,
@@ -23,7 +23,7 @@ export default function AdminArticlePage() {
 
   const rawArticles = USE_MOCK
     ? mockArticles
-    : ((data?.articles ?? []) as Article[]);
+    : (data?.articles ?? []).map(toArticle);
 
   const articles = [...rawArticles].sort((a, b) => {
     return b.updatedAt - a.updatedAt;

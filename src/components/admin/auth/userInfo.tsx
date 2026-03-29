@@ -4,7 +4,8 @@ import { profileQuery } from "@/apis/auth/profiles";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { getFirstProfile } from "@/services/auth/actions";
-import { Profile, RawProfile } from "@/types/user";
+import { Profile } from "@/types/user";
+import { toRawProfile } from "@/repositories/profile";
 import Link from "next/link";
 
 export default function UserInfo() {
@@ -25,7 +26,7 @@ export default function UserInfo() {
   }
 
   const profile: Profile | null = getFirstProfile(
-    data.profiles as RawProfile[],
+    data.profiles.map(toRawProfile),
   );
 
   if (!profile) {

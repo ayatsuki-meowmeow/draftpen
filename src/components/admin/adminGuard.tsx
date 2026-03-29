@@ -3,7 +3,8 @@
 import { profileQuery } from "@/apis/auth/profiles";
 import { db } from "@/lib/db";
 import { getProfile, isAdminProfile } from "@/services/auth/actions";
-import { Profile, RawProfile } from "@/types/user";
+import { Profile } from "@/types/user";
+import { toRawProfile } from "@/repositories/profile";
 
 export default function AdminGuard({
   children,
@@ -35,7 +36,7 @@ export default function AdminGuard({
   }
 
   const currentProfile: Profile = getProfile(
-    rawProfiles.profiles as RawProfile[],
+    rawProfiles.profiles.map(toRawProfile),
   );
   const isAdmin: boolean = isAdminProfile(currentProfile);
 
