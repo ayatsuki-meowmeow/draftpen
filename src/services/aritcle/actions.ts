@@ -7,9 +7,5 @@ export function getPublishedMock(mockList: Article[]): Article[] {
 }
 
 export function isPublished(article: Article): article is PublishedArticle {
-  return (
-    article.publishedAt != null &&
-    article.createdAt != null &&
-    article.updatedAt != null
-  );
+  return article.publishedAt != null;
 }

@@ -1,15 +1,27 @@
 "use client";
 
 import { PostCard } from "@/components/main/postCard";
+import { db } from "@/lib/db";
+import { USE_MOCK } from "@/lib/constants";
 import { mockArticles } from "@/mocks/articles";
 import { isPublished } from "@/services/aritcle/actions";
 import { convertDateToString } from "@/utils";
 
 function App() {
+  const { isLoading, error, data } = db.useQuery({ articles: {} });
+
+  if (!USE_MOCK && isLoading) return <div className="p-4">読み込み中...</div>;
+  if (!USE_MOCK && error)
+    return <div className="p-4">エラー: {error.message}</div>;
+
+  const articles = (USE_MOCK ? mockArticles : (data?.articles ?? [])).filter(
+    isPublished,
+  );
+
   return (
     <div className="font-mono min-h-screen flex flex-col pt-12 px-8 space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {mockArticles.filter(isPublished).map((object) => (
+        {articles.map((object) => (
           <PostCard
             id={object.id}
             key={object.id}

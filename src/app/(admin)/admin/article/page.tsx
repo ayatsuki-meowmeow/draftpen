@@ -17,7 +17,8 @@ export default function AdminArticlePage() {
   const { isLoading, error, data } = db.useQuery({ articles: {} });
 
   if (!USE_MOCK && isLoading) return <div className="p-4">読み込み中...</div>;
-  if (!USE_MOCK && error) return <div className="p-4">エラー: {error.message}</div>;
+  if (!USE_MOCK && error)
+    return <div className="p-4">エラー: {error.message}</div>;
 
   const rawArticles = USE_MOCK ? mockArticles : (data?.articles ?? []);
 
@@ -41,7 +42,10 @@ export default function AdminArticlePage() {
           {articles.map((article) => (
             <TableRow key={article.id}>
               <TableCell>
-                <Link href={`/admin/article/${article.id}`} className="hover:underline">
+                <Link
+                  href={`/admin/article/${article.id}`}
+                  className="hover:underline"
+                >
                   {article.draftTitle}
                 </Link>
               </TableCell>
