@@ -14,19 +14,23 @@ import {
 } from "@/components/ui/table";
 
 export default function AdminArticlePage() {
-  const { isLoading, error, data } = db.useQuery({ articles: {} });
+  const { isLoading, error, data } = db.useQuery({
+    articles: {
+      $: { order: { publishedAt: "desc" } },
+    },
+  });
 
   if (!USE_MOCK && isLoading) return <div className="p-4">読み込み中...</div>;
   if (!USE_MOCK && error)
     return <div className="p-4">エラー: {error.message}</div>;
 
-  const rawArticles = USE_MOCK ? mockArticles : (data?.articles ?? []);
-
-  const articles = [...rawArticles].sort((a, b) => {
-    const aTime = a.updatedAt instanceof Date ? a.updatedAt.getTime() : 0;
-    const bTime = b.updatedAt instanceof Date ? b.updatedAt.getTime() : 0;
-    return bTime - aTime;
-  });
+  const articles = USE_MOCK
+    ? [...mockArticles].sort((a, b) => {
+        const aTime = a.publishedAt instanceof Date ? a.publishedAt.getTime() : 0;
+        const bTime = b.publishedAt instanceof Date ? b.publishedAt.getTime() : 0;
+        return bTime - aTime;
+      })
+    : (data?.articles ?? []);
 
   return (
     <div className="p-4">

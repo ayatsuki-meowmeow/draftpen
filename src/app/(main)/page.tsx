@@ -8,15 +8,25 @@ import { convertDateToString } from "@/utils";
 import { isPublished } from "@/services/article/actions";
 
 function App() {
-  const { isLoading, error, data } = db.useQuery({ articles: {} });
+  const { isLoading, error, data } = db.useQuery({
+    articles: {
+      $: { order: { publishedAt: "desc" } },
+    },
+  });
 
   if (!USE_MOCK && isLoading) return <div className="p-4">読み込み中...</div>;
   if (!USE_MOCK && error)
     return <div className="p-4">エラー: {error.message}</div>;
 
-  const articles = (USE_MOCK ? mockArticles : (data?.articles ?? [])).filter(
-    isPublished,
-  );
+  const articles = (
+    USE_MOCK
+      ? [...mockArticles].sort((a, b) => {
+          const aTime = a.publishedAt instanceof Date ? a.publishedAt.getTime() : 0;
+          const bTime = b.publishedAt instanceof Date ? b.publishedAt.getTime() : 0;
+          return bTime - aTime;
+        })
+      : (data?.articles ?? [])
+  ).filter(isPublished);
 
   return (
     <div className="font-mono min-h-screen flex flex-col pt-12 px-8 space-y-6">
