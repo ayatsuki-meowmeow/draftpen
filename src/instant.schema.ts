@@ -21,7 +21,7 @@ const _schema = i.schema({
       content: i.string(),
       draftContent: i.string(),
       status: i.string().indexed(),
-      publishedAt: i.date().optional(),
+      publishedAt: i.date().optional().indexed(),
       createdAt: i.date(),
       updatedAt: i.date(),
     }),
@@ -57,10 +57,9 @@ const _schema = i.schema({
 });
 
 // This helps Typescript display nicer intellisense
-type _AppSchema = typeof _schema;
-// TODO: AppSchemaが必要かどうか確認する
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface AppSchema extends _AppSchema {}
+type AppSchema = typeof _schema;
+// NOTE: 拡張が必要そうなら下記を使う
+// interface AppSchema extends _AppSchema { }
 const schema: AppSchema = _schema;
 
 export type { AppSchema };
