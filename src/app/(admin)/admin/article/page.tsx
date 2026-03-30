@@ -4,7 +4,11 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { mockArticles } from "@/mocks/articles";
 import { USE_MOCK } from "@/lib/constants";
-import { isPublished, isUpdated, sortByPublishedAt } from "@/services/article/actions";
+import {
+  isPublished,
+  isUpdated,
+  sortByPublishedAt,
+} from "@/services/article/actions";
 import {
   Table,
   TableBody,
