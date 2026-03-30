@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { USE_MOCK } from "@/lib/constants";
 import { mockArticles } from "@/mocks/articles";
 import { convertDateToString } from "@/utils";
-import { isPublished } from "@/services/article/actions";
+import { isPublished, sortByPublishedAt } from "@/services/article/actions";
 
 function App() {
   const { isLoading, error, data } = db.useQuery({
@@ -19,13 +19,7 @@ function App() {
     return <div className="p-4">エラー: {error.message}</div>;
 
   const articles = (
-    USE_MOCK
-      ? [...mockArticles].sort((a, b) => {
-          const aTime = a.publishedAt instanceof Date ? a.publishedAt.getTime() : 0;
-          const bTime = b.publishedAt instanceof Date ? b.publishedAt.getTime() : 0;
-          return bTime - aTime;
-        })
-      : (data?.articles ?? [])
+    USE_MOCK ? sortByPublishedAt(mockArticles) : (data?.articles ?? [])
   ).filter(isPublished);
 
   return (

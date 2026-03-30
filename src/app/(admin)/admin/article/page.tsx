@@ -4,6 +4,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { mockArticles } from "@/mocks/articles";
 import { USE_MOCK } from "@/lib/constants";
+import { isPublished, isUpdated, sortByPublishedAt } from "@/services/article/actions";
 import {
   Table,
   TableBody,
@@ -25,11 +26,7 @@ export default function AdminArticlePage() {
     return <div className="p-4">エラー: {error.message}</div>;
 
   const articles = USE_MOCK
-    ? [...mockArticles].sort((a, b) => {
-        const aTime = a.publishedAt instanceof Date ? a.publishedAt.getTime() : 0;
-        const bTime = b.publishedAt instanceof Date ? b.publishedAt.getTime() : 0;
-        return bTime - aTime;
-      })
+    ? sortByPublishedAt(mockArticles)
     : (data?.articles ?? []);
 
   return (
@@ -54,12 +51,12 @@ export default function AdminArticlePage() {
                 </Link>
               </TableCell>
               <TableCell>
-                {article.updatedAt instanceof Date
+                {isUpdated(article)
                   ? article.updatedAt.toLocaleDateString("ja-JP")
                   : "—"}
               </TableCell>
               <TableCell>
-                {article.publishedAt instanceof Date
+                {isPublished(article)
                   ? article.publishedAt.toLocaleDateString("ja-JP")
                   : "非公開"}
               </TableCell>
