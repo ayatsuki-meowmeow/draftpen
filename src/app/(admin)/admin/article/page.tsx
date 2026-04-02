@@ -6,6 +6,11 @@ import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
 import { USE_MOCK } from "@/lib/constants";
 import {
+  isPublished,
+  isUpdated,
+  sortByPublishedAt,
+} from "@/services/article/actions";
+import {
   Table,
   TableBody,
   TableCell,
@@ -15,19 +20,19 @@ import {
 } from "@/components/ui/table";
 
 export default function AdminArticlePage() {
-  const { isLoading, error, data } = db.useQuery({ articles: {} });
+  const { isLoading, error, data } = db.useQuery({
+    articles: {
+      $: { order: { publishedAt: "desc" } },
+    },
+  });
 
   if (!USE_MOCK && isLoading) return <div className="p-4">読み込み中...</div>;
   if (!USE_MOCK && error)
     return <div className="p-4">エラー: {error.message}</div>;
 
-  const rawArticles = USE_MOCK
-    ? mockArticles
+  const articles = USE_MOCK
+    ? sortByPublishedAt(mockArticles)
     : (data?.articles ?? []).map(toArticle);
-
-  const articles = [...rawArticles].sort((a, b) => {
-    return b.updatedAt - a.updatedAt;
-  });
 
   return (
     <div className="p-4">
@@ -51,17 +56,21 @@ export default function AdminArticlePage() {
                 </Link>
               </TableCell>
               <TableCell>
-                {new Date(article.updatedAt).toLocaleDateString("ja-JP")}
-              </TableCell>
+                {isPublished(article)
+                  ? article.publishedAt.toLocaleString("ja-JP")
+                  : "非公開"
+                }
+              </TableCell >
               <TableCell>
-                {article.publishedAt != null
-                  ? new Date(article.publishedAt).toLocaleDateString("ja-JP")
-                  : "非公開"}
+                {isUpdated(article)
+                  ? article.updatedAt.toLocaleString("ja-JP")
+                  : "—"}
               </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </div>
+            </TableRow >
+          ))
+          }
+        </TableBody >
+      </Table >
+    </div >
   );
 }

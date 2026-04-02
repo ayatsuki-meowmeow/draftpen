@@ -20,18 +20,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ja">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="border-b-2 mb-4 flex flex-col justify-center h-20">
-          <Header />
-        </div>
-        <div className="root">{children}</div>
+        {children}
       </body>
     </html>
   );

@@ -21,7 +21,7 @@ const _schema = i.schema({
       content: i.string(),
       draftContent: i.string(),
       status: i.string().indexed(),
-      publishedAt: i.date().optional(),
+      publishedAt: i.date().optional().indexed(),
       createdAt: i.date(),
       updatedAt: i.date(),
     }),

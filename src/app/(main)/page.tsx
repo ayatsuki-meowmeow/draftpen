@@ -4,19 +4,23 @@ import { PostCard } from "@/components/main/postCard";
 import { db } from "@/lib/db";
 import { USE_MOCK } from "@/lib/constants";
 import { mockArticles } from "@/mocks/articles";
-import { isPublished } from "@/services/aritcle/actions";
 import { toArticle } from "@/repositories/article";
 import { convertDateToString } from "@/utils";
+import { isPublished, sortByPublishedAt } from "@/services/article/actions";
 
 function App() {
-  const { isLoading, error, data } = db.useQuery({ articles: {} });
+  const { isLoading, error, data } = db.useQuery({
+    articles: {
+      $: { order: { publishedAt: "desc" } },
+    },
+  });
 
   if (!USE_MOCK && isLoading) return <div className="p-4">読み込み中...</div>;
   if (!USE_MOCK && error)
     return <div className="p-4">エラー: {error.message}</div>;
 
   const articles = (
-    USE_MOCK ? mockArticles : (data?.articles ?? []).map(toArticle)
+    USE_MOCK ? sortByPublishedAt(mockArticles) : (data?.articles ?? []).map(toArticle)
   ).filter(isPublished);
 
   return (
