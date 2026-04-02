@@ -56,7 +56,9 @@ export default function AdminArticlePage() {
                   ? new Date(article.publishedAt).toLocaleString("ja-JP")
                   : "非公開"}
               </TableCell>
-              <TableCell>{new Date(article.updatedAt).toLocaleString("ja-JP")}</TableCell>
+              <TableCell>
+                {new Date(article.updatedAt).toLocaleString("ja-JP")}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
