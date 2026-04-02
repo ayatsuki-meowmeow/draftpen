@@ -5,11 +5,7 @@ import { db } from "@/lib/db";
 import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
 import { USE_MOCK } from "@/lib/constants";
-import {
-  isPublished,
-  isUpdated,
-  sortByPublishedAt,
-} from "@/services/article/actions";
+import { isPublished, sortByPublishedAt } from "@/services/article/actions";
 import {
   Table,
   TableBody,
@@ -58,19 +54,13 @@ export default function AdminArticlePage() {
               <TableCell>
                 {isPublished(article)
                   ? article.publishedAt.toLocaleString("ja-JP")
-                  : "非公開"
-                }
-              </TableCell >
-              <TableCell>
-                {isUpdated(article)
-                  ? article.updatedAt.toLocaleString("ja-JP")
-                  : "—"}
+                  : "非公開"}
               </TableCell>
-            </TableRow >
-          ))
-          }
-        </TableBody >
-      </Table >
-    </div >
+              <TableCell>{article.updatedAt.toLocaleString("ja-JP")}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

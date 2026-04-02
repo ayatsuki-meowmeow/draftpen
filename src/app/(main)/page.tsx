@@ -20,7 +20,9 @@ function App() {
     return <div className="p-4">エラー: {error.message}</div>;
 
   const articles = (
-    USE_MOCK ? sortByPublishedAt(mockArticles) : (data?.articles ?? []).map(toArticle)
+    USE_MOCK
+      ? sortByPublishedAt(mockArticles)
+      : (data?.articles ?? []).map(toArticle)
   ).filter(isPublished);
 
   return (
