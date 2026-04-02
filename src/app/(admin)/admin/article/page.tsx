@@ -3,12 +3,9 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { mockArticles } from "@/mocks/articles";
+import { toArticle } from "@/repositories/article";
 import { USE_MOCK } from "@/lib/constants";
-import {
-  isPublished,
-  isUpdated,
-  sortByPublishedAt,
-} from "@/services/article/actions";
+import { isPublished, sortByPublishedAt } from "@/services/article/actions";
 import {
   Table,
   TableBody,
@@ -31,7 +28,7 @@ export default function AdminArticlePage() {
 
   const articles = USE_MOCK
     ? sortByPublishedAt(mockArticles)
-    : (data?.articles ?? []);
+    : (data?.articles ?? []).map(toArticle);
 
   return (
     <div className="p-4">
@@ -55,14 +52,12 @@ export default function AdminArticlePage() {
                 </Link>
               </TableCell>
               <TableCell>
-                {isUpdated(article)
-                  ? article.updatedAt.toLocaleDateString("ja-JP")
-                  : "—"}
+                {isPublished(article)
+                  ? new Date(article.publishedAt).toLocaleString("ja-JP")
+                  : "非公開"}
               </TableCell>
               <TableCell>
-                {isPublished(article)
-                  ? article.publishedAt.toLocaleDateString("ja-JP")
-                  : "非公開"}
+                {new Date(article.updatedAt).toLocaleString("ja-JP")}
               </TableCell>
             </TableRow>
           ))}

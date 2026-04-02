@@ -25,8 +25,8 @@ export async function createProfileForUser(
       .create({
         name,
         role,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
       })
       .link({
         user: userId,

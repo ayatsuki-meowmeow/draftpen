@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { getFirstProfile } from "@/services/auth/actions";
 import { Profile } from "@/types/user";
+import { toRawProfile } from "@/repositories/profile";
 import Link from "next/link";
 
 export default function UserInfo() {
@@ -24,7 +25,9 @@ export default function UserInfo() {
     return <div>プロフィール情報の取得に失敗しました。</div>;
   }
 
-  const profile: Profile | null = getFirstProfile(data.profiles);
+  const profile: Profile | null = getFirstProfile(
+    data.profiles.map(toRawProfile),
+  );
 
   if (!profile) {
     return <div>プロフィール情報の取得に失敗しました。</div>;
