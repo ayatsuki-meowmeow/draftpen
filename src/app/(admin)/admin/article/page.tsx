@@ -53,10 +53,10 @@ export default function AdminArticlePage() {
               </TableCell>
               <TableCell>
                 {isPublished(article)
-                  ? article.publishedAt.toLocaleString("ja-JP")
+                  ? new Date(article.publishedAt).toLocaleString("ja-JP")
                   : "非公開"}
               </TableCell>
-              <TableCell>{article.updatedAt.toLocaleString("ja-JP")}</TableCell>
+              <TableCell>{new Date(article.updatedAt).toLocaleString("ja-JP")}</TableCell>
             </TableRow>
           ))}
         </TableBody>
