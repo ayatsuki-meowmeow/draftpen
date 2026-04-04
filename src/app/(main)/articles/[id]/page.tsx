@@ -28,10 +28,8 @@ function App() {
       </div>
     );
 
-  // const article: PublishedArticle | undefined = USE_MOCK ? mockArticles.filter(isPublished)[0] : (data?.articles ?? []).map(toArticle).filter(isPublished)[0];
-
   const rawArticle: Article[] | undefined = USE_MOCK
-    ? mockArticles
+    ? mockArticles.filter((obj) => obj.id === id)
     : (data?.articles ?? []).map(toArticle);
 
   if (!rawArticle) return <div className="p-4">記事が見つかりません。</div>;
