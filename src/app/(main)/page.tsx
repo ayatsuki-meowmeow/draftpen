@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { USE_MOCK } from "@/lib/constants";
 import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
-import { convertDateToString } from "@/utils";
+import { convertDateString } from "@/utils";
 import { isPublished, sortByPublishedAt } from "@/services/article/actions";
 
 function App() {
@@ -33,8 +33,8 @@ function App() {
             id={object.id}
             key={object.id}
             title={object.title}
-            publishedAt={convertDateToString(object.publishedAt)}
-            lastUpdatedAt={convertDateToString(object.updatedAt)}
+            publishedAt={convertDateString(object.publishedAt)}
+            lastUpdatedAt={convertDateString(object.updatedAt)}
           />
         ))}
       </div>
