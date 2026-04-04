@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -20,16 +21,18 @@ export function PostCard({
   lastUpdatedAt,
 }: PostCardProps) {
   return (
-    <Card key={id}>
-      <CardContent className="h-12">
-        <CardTitle>{title}</CardTitle>
-      </CardContent>
-      <CardFooter>
-        <CardDescription>
-          <p>公開日: {publishedAt}</p>
-          <p>最終更新日: {lastUpdatedAt}</p>
-        </CardDescription>
-      </CardFooter>
-    </Card>
+    <Link href={`/articles/${id}`} aria-label={title}>
+      <Card>
+        <CardContent className="h-12">
+          <CardTitle>{title}</CardTitle>
+        </CardContent>
+        <CardFooter>
+          <CardDescription>
+            <p>公開日: {publishedAt}</p>
+            <p>最終更新日: {lastUpdatedAt}</p>
+          </CardDescription>
+        </CardFooter>
+      </Card>
+    </Link>
   );
 }

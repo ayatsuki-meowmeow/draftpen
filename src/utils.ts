@@ -1,6 +1,6 @@
 export type ValueOf<T> = T[keyof T];
 
-export function convertDateToString(date: number): string {
+export function convertDateString(date: number): string {
   const d = new Date(date);
   const year = d.getFullYear().toString();
   const month = (d.getMonth() + 1).toString().padStart(2, "0");

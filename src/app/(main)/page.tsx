@@ -1,23 +1,23 @@
 "use client";
 
 import { PostCard } from "@/components/main/postCard";
+import { DbError } from "@/components/ui/db-error";
 import { db } from "@/lib/db";
 import { USE_MOCK } from "@/lib/constants";
 import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
-import { convertDateToString } from "@/utils";
+import { convertDateString } from "@/utils";
 import { isPublished, sortByPublishedAt } from "@/services/article/actions";
 
 function App() {
   const { isLoading, error, data } = db.useQuery({
     articles: {
-      $: { order: { publishedAt: "desc" } },
+      $: { order: { publishedAt: "desc" }, where: { status: "published" } },
     },
   });
 
   if (!USE_MOCK && isLoading) return <div className="p-4">読み込み中...</div>;
-  if (!USE_MOCK && error)
-    return <div className="p-4">エラー: {error.message}</div>;
+  if (!USE_MOCK && error) return <DbError error={error} />;
 
   const articles = (
     USE_MOCK
@@ -33,8 +33,8 @@ function App() {
             id={object.id}
             key={object.id}
             title={object.title}
-            publishedAt={convertDateToString(object.publishedAt)}
-            lastUpdatedAt={convertDateToString(object.updatedAt)}
+            publishedAt={convertDateString(object.publishedAt)}
+            lastUpdatedAt={convertDateString(object.updatedAt)}
           />
         ))}
       </div>
