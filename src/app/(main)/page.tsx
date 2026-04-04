@@ -1,6 +1,7 @@
 "use client";
 
 import { PostCard } from "@/components/main/postCard";
+import { DbError } from "@/components/ui/db-error";
 import { db } from "@/lib/db";
 import { USE_MOCK } from "@/lib/constants";
 import { mockArticles } from "@/mocks/articles";
@@ -16,8 +17,7 @@ function App() {
   });
 
   if (!USE_MOCK && isLoading) return <div className="p-4">読み込み中...</div>;
-  if (!USE_MOCK && error)
-    return <div className="p-4">エラー: {error.message}</div>;
+  if (!USE_MOCK && error) return <DbError error={error} />;
 
   const articles = (
     USE_MOCK

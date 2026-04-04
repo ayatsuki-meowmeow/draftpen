@@ -21,8 +21,8 @@ export function PostCard({
   lastUpdatedAt,
 }: PostCardProps) {
   return (
-    <Link href={`/articles/${id}`}>
-      <Card key={id}>
+    <Link href={`/articles/${id}`} aria-label={title}>
+      <Card>
         <CardContent className="h-12">
           <CardTitle>{title}</CardTitle>
         </CardContent>
