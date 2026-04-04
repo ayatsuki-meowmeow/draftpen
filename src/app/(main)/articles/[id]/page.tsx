@@ -13,7 +13,7 @@ function App() {
   const { id } = useParams<{ id: string }>();
 
   const { isLoading, error, data } = db.useQuery({
-    articles: { $: { where: { id } } },
+    articles: { $: { where: { id, status: "published" } } },
   });
 
   if (!USE_MOCK && isLoading)
@@ -28,11 +28,9 @@ function App() {
       </div>
     );
 
-  const rawArticle: Article[] | undefined = USE_MOCK
+  const rawArticle: Article[] = USE_MOCK
     ? mockArticles.filter((obj) => obj.id === id)
     : (data?.articles ?? []).map(toArticle);
-
-  if (!rawArticle) return <div className="p-4">記事が見つかりません。</div>;
 
   const article: PublishedArticle | undefined =
     rawArticle.filter(isPublished)[0];

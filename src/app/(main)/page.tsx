@@ -11,7 +11,7 @@ import { isPublished, sortByPublishedAt } from "@/services/article/actions";
 function App() {
   const { isLoading, error, data } = db.useQuery({
     articles: {
-      $: { order: { publishedAt: "desc" } },
+      $: { order: { publishedAt: "desc" }, where: { status: "published" } },
     },
   });
 
