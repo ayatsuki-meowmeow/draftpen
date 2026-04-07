@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { DbError } from "@/components/ui/db-error";
 import { MarkdownRenderer } from "@/components/ui/markdown-renderer";
 import { USE_MOCK } from "@/lib/constants";
@@ -9,6 +10,8 @@ import { toArticle } from "@/repositories/article";
 import { isPublished } from "@/services/article/actions";
 import { Article, PublishedArticle } from "@/types/article";
 import { convertDateString } from "@/utils";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 
 function ArticleDetailPage() {
@@ -34,6 +37,13 @@ function ArticleDetailPage() {
 
   return (
     <div className="flex flex-col items-center justify-start m-6">
+      <div className="w-full max-w-prose mb-4">
+        <Button variant="ghost" asChild>
+          <Link href="/">
+            <ArrowLeft /> ホームに戻る
+          </Link>
+        </Button>
+      </div>
       <h2 className="font-bold mb-2 text-4xl">{article.title}</h2>
       <div className="mb-4">
         <p>公開日: {convertDateString(article.publishedAt)}</p>
