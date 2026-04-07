@@ -1,0 +1,55 @@
+"use client";
+
+import { profileQuery } from "@/apis/auth/profiles";
+import { Button } from "@/components/ui/button";
+import { db } from "@/lib/db";
+import { getFirstProfile } from "@/services/auth/actions";
+import { Profile } from "@/types/user";
+import { toRawProfile } from "@/repositories/profile";
+import Link from "next/link";
+
+export default function UserInfo() {
+  const userId: string = db.useUser().id;
+
+  const { data, isLoading, error } = db.useQuery(profileQuery.byUserId(userId));
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>プロフィール情報の取得中にエラーが発生しました。</div>;
+  }
+
+  if (!data) {
+    return <div>プロフィール情報の取得に失敗しました。</div>;
+  }
+
+  const profile: Profile | null = getFirstProfile(
+    data.profiles.map(toRawProfile),
+  );
+
+  if (!profile) {
+    return <div>プロフィール情報の取得に失敗しました。</div>;
+  }
+
+  return (
+    <div className="flex flex-col p-4 gap-2 justify-center items-center">
+      <h1>
+        Hello {profile.name}! Your Role is {profile.role}
+      </h1>
+      <Button
+        onClick={() => {
+          db.auth.signOut();
+        }}
+        variant="secondary"
+        className="w-40"
+      >
+        ログアウト
+      </Button>
+      <Button variant="outline" className="w-120 h-60" asChild>
+        <Link href="/admin/articles">記事管理画面へ</Link>
+      </Button>
+    </div>
+  );
+}

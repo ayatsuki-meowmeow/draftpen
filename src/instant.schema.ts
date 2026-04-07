@@ -4,46 +4,61 @@ import { i } from "@instantdb/react";
 
 const _schema = i.schema({
   entities: {
-    $files: i.entity({
-      path: i.string().unique().indexed(),
-      url: i.string(),
-    }),
     $users: i.entity({
-      email: i.string().unique().indexed().optional(),
-      imageURL: i.string().optional(),
-      type: i.string().optional(),
+      email: i.string().unique(),
     }),
-    todos: i.entity({
-      text: i.string(),
-      done: i.boolean(),
-      createdAt: i.number(),
+    profiles: i.entity({
+      name: i.string(),
+      bio: i.string().optional(),
+      role: i.string(),
+      createdAt: i.date(),
+      updatedAt: i.date(),
+    }),
+    articles: i.entity({
+      draftTitle: i.string().indexed(),
+      title: i.string().indexed(),
+      content: i.string(),
+      draftContent: i.string(),
+      status: i.string().indexed(),
+      publishedAt: i.date().optional().indexed(),
+      createdAt: i.date(),
+      updatedAt: i.date(),
     }),
   },
   links: {
-    $usersLinkedPrimaryUser: {
+    userProfiles: {
       forward: {
-        on: "$users",
+        on: "profiles",
         has: "one",
-        label: "linkedPrimaryUser",
+        label: "user",
         onDelete: "cascade",
       },
       reverse: {
         on: "$users",
-        has: "many",
-        label: "linkedGuestUsers",
+        has: "one",
+        label: "profile",
       },
     },
-  },
-  rooms: {
-    todos: {
-      presence: i.entity({}),
+    authorArticles: {
+      forward: {
+        on: "articles",
+        has: "one",
+        label: "author",
+        onDelete: "cascade",
+      },
+      reverse: {
+        on: "profiles",
+        has: "many",
+        label: "articles",
+      },
     },
   },
 });
 
 // This helps Typescript display nicer intellisense
-type _AppSchema = typeof _schema;
-interface AppSchema extends _AppSchema {}
+type AppSchema = typeof _schema;
+// NOTE: 拡張が必要そうなら下記を使う
+// interface AppSchema extends _AppSchema { }
 const schema: AppSchema = _schema;
 
 export type { AppSchema };
