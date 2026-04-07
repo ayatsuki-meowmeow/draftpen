@@ -38,13 +38,6 @@ function App() {
           />
         ))}
       </div>
-      {/* TODO: デプロイ前にログインリンクは削除する */}
-      <div className="text-xs text-center">
-        <span>ログインは</span>
-        <a className="text-blue-500 underline ml-1" href="/admin/auth">
-          こちら
-        </a>
-      </div>
     </div>
   );
 }
