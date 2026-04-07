@@ -9,9 +9,17 @@ interface MarkdownRendererProps {
   className?: string;
 }
 
-export function MarkdownRenderer({ content, className }: MarkdownRendererProps) {
+export function MarkdownRenderer({
+  content,
+  className,
+}: MarkdownRendererProps) {
   return (
-    <div className={cn("prose prose-neutral dark:prose-invert max-w-none", className)}>
+    <div
+      className={cn(
+        "prose prose-neutral dark:prose-invert max-w-none",
+        className,
+      )}
+    >
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
     </div>
   );

@@ -2,8 +2,8 @@
 
 import { PostCard } from "@/components/main/postCard";
 import { mockArticles } from "@/mocks/articles";
-import { isPublished } from "@/services/aritcle/actions";
-import { convertDateToString } from "@/utils";
+import { isPublished } from "@/services/article/actions";
+import { convertDateString } from "@/utils";
 
 function App() {
   return (
@@ -14,8 +14,8 @@ function App() {
             id={object.id}
             key={object.id}
             title={object.title}
-            publishedAt={convertDateToString(object.publishedAt)}
-            lastUpdatedAt={convertDateToString(object.updatedAt)}
+            publishedAt={convertDateString(object.publishedAt)}
+            lastUpdatedAt={convertDateString(object.updatedAt)}
           />
         ))}
       </div>

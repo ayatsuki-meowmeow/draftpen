@@ -9,7 +9,11 @@ import { db } from "@/lib/db";
 import { cn } from "@/lib/utils";
 import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
-import { createArticle, isPublished, publishArticle } from "@/services/article/actions";
+import {
+  createArticle,
+  isPublished,
+  publishArticle,
+} from "@/services/article/actions";
 import { Article } from "@/types/article";
 import { convertDateString } from "@/utils";
 import { useParams, useRouter } from "next/navigation";
@@ -103,16 +107,21 @@ export default function AdminArticleEditPage() {
   if (!rawArticle)
     return (
       <div className="flex flex-col items-center m-4">
-        <Button onClick={handleCreateArticle}>
-          新規記事の作成
-        </Button>
+        <Button onClick={handleCreateArticle}>新規記事の作成</Button>
       </div>
     );
 
   return (
     <div className="flex flex-col items-start gap-4 m-4 mx-auto px-8">
       <div className="flex items-center justify-start w-full">
-        <Button variant="outline" onClick={() => {router.push(`/admin/articles`)}}>一覧に戻る</Button>
+        <Button
+          variant="outline"
+          onClick={() => {
+            router.push(`/admin/articles`);
+          }}
+        >
+          一覧に戻る
+        </Button>
       </div>
       <div className="flex items-center justify-between w-full">
         <p className="text-sm text-muted-foreground">
@@ -130,7 +139,9 @@ export default function AdminArticleEditPage() {
             open={isUpdateDialogOpen}
             onOpenChange={setIsUpdateDialogOpen}
           >
-            <Dialog.Trigger render={<Button variant="outline" />}>更新</Dialog.Trigger>
+            <Dialog.Trigger render={<Button variant="outline" />}>
+              更新
+            </Dialog.Trigger>
             <Dialog.Portal>
               <Dialog.Backdrop className="fixed inset-0 bg-black/40" />
               <Dialog.Popup className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background border rounded-lg shadow-lg p-6 w-80 flex flex-col gap-4">
@@ -170,7 +181,10 @@ export default function AdminArticleEditPage() {
                   <Dialog.Close render={<Button variant="outline" />}>
                     キャンセル
                   </Dialog.Close>
-                  <Button onClick={handlePublishConfirm} disabled={isPublishing}>
+                  <Button
+                    onClick={handlePublishConfirm}
+                    disabled={isPublishing}
+                  >
                     {isPublishing ? "公開中..." : "公開する"}
                   </Button>
                 </div>

@@ -1,11 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { db } from "@/lib/db";
 import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
 import { USE_MOCK } from "@/lib/constants";
-import { createArticle, isPublished, sortByPublishedAt } from "@/services/article/actions";
+import {
+  createArticle,
+  isPublished,
+  sortByPublishedAt,
+} from "@/services/article/actions";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -53,10 +56,11 @@ export default function AdminArticlePage() {
         </TableHeader>
         <TableBody>
           {articles.map((article) => (
-            <TableRow key={article.id} onClick={() => router.push(`/admin/articles/${article.id}`)}>
-              <TableCell>
-                {article.draftTitle}
-              </TableCell>
+            <TableRow
+              key={article.id}
+              onClick={() => router.push(`/admin/articles/${article.id}`)}
+            >
+              <TableCell>{article.draftTitle}</TableCell>
               <TableCell>
                 {isPublished(article)
                   ? new Date(article.publishedAt).toLocaleString("ja-JP")

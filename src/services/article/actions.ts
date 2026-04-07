@@ -17,7 +17,7 @@ export function sortByPublishedAt(articles: Article[]): Article[] {
 export async function createArticle(): Promise<string> {
   const newId = id();
   await db.transact(
-    db.tx.articles[newId].create({
+    db.tx.articles[newId]!.create({
       draftTitle: "",
       title: "",
       content: "",

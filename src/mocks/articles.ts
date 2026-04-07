@@ -3,7 +3,6 @@ import { Article } from "@/types/article";
 export const mockArticles: Article[] = [
   {
     id: "aaa",
-    slug: "getting-started-with-instantdb",
     draftTitle: "InstantDB入門（下書き）",
     title: "InstantDB入門ガイド",
     content: "InstantDBの基本的な使い方について解説します。",
@@ -15,7 +14,6 @@ export const mockArticles: Article[] = [
   },
   {
     id: "2r3",
-    slug: "react-best-practices",
     draftTitle: "Reactベストプラクティス（下書き）",
     title: "Reactベストプラクティスまとめ",
     content: "React開発におけるベストプラクティスを紹介します。",
@@ -27,7 +25,6 @@ export const mockArticles: Article[] = [
   },
   {
     id: "ew",
-    slug: "nextjs-routing-guide",
     draftTitle: "Next.jsルーティング（下書き）",
     title: "Next.jsルーティング完全ガイド",
     content: "App Routerの仕組みについて解説します。",
@@ -39,7 +36,6 @@ export const mockArticles: Article[] = [
   },
   {
     id: "radf",
-    slug: "typescript-tips",
     draftTitle: "TypeScript小ネタ（下書き）",
     title: "TypeScript Tips集",
     content: "便利な型テクニックを紹介します。",
@@ -51,7 +47,6 @@ export const mockArticles: Article[] = [
   },
   {
     id: "dfa",
-    slug: "database-design-basics",
     draftTitle: "DB設計基礎（下書き）",
     title: "データベース設計の基本",
     content: "正規化やER図について解説します。",
@@ -63,7 +58,6 @@ export const mockArticles: Article[] = [
   },
   {
     id: "fda",
-    slug: "web-performance-optimization",
     draftTitle: "パフォーマンス改善（下書き）",
     title: "Webパフォーマンス最適化",
     content: "LCPやCLS改善の方法を紹介します。",
@@ -75,7 +69,6 @@ export const mockArticles: Article[] = [
   },
   {
     id: "cda",
-    slug: "css-modern-layout",
     draftTitle: "CSSレイアウト（下書き）",
     title: "モダンCSSレイアウト入門",
     content: "FlexboxとGridの使い分けを解説します。",
@@ -87,7 +80,6 @@ export const mockArticles: Article[] = [
   },
   {
     id: "fdas",
-    slug: "nodejs-api-design",
     draftTitle: "API設計（下書き）",
     title: "Node.js API設計ガイド",
     content: "REST API設計の基本を紹介します。",
@@ -99,7 +91,6 @@ export const mockArticles: Article[] = [
   },
   {
     id: "aaaaa",
-    slug: "testing-strategies",
     draftTitle: "テスト戦略（下書き）",
     title: "フロントエンドのテスト戦略",
     content: "ユニットテストとE2Eテストの違いを解説します。",
@@ -111,7 +102,6 @@ export const mockArticles: Article[] = [
   },
   {
     id: "fdaxxx",
-    slug: "auth-implementation",
     draftTitle: "認証実装（下書き）",
     title: "認証機能の実装方法",
     content: "JWTやOAuthの基本について解説します。",
