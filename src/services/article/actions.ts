@@ -45,3 +45,18 @@ export async function publishArticle(
     }),
   );
 }
+
+export async function updateArticle(
+  articleId: string,
+  draftTitle: string,
+  draftContent: string,
+): Promise<void> {
+  await db.transact(
+    db.tx.articles[articleId]!.update({
+      title: draftTitle,
+      content: draftContent,
+      status: "published",
+      updatedAt: Date.now(),
+    }),
+  );
+}

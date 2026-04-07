@@ -13,6 +13,7 @@ import {
   createArticle,
   isPublished,
   publishArticle,
+  updateArticle,
 } from "@/services/article/actions";
 import { Article } from "@/types/article";
 import { convertDateString } from "@/utils";
@@ -89,7 +90,7 @@ export default function AdminArticleEditPage() {
   const handleUpdateConfirm = async () => {
     if (USE_MOCK) return;
     setIsPublishing(true);
-    await publishArticle(articleId, draftTitle, draftContent);
+    await updateArticle(articleId, draftTitle, draftContent);
     setIsPublishing(false);
     setIsUpdateDialogOpen(false);
   };

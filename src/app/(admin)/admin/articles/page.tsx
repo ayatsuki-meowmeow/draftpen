@@ -50,8 +50,8 @@ export default function AdminArticlePage() {
         <TableHeader>
           <TableRow>
             <TableHead>記事名</TableHead>
-            <TableHead>最終編集日</TableHead>
             <TableHead>公開日</TableHead>
+            <TableHead>最終編集日</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
