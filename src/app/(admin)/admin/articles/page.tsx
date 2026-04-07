@@ -14,8 +14,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useRouter } from "next/navigation";
 
 export default function AdminArticlePage() {
+  const router = useRouter();
   const { isLoading, error, data } = db.useQuery({
     articles: {
       $: { order: { publishedAt: "desc" } },
@@ -42,14 +44,9 @@ export default function AdminArticlePage() {
         </TableHeader>
         <TableBody>
           {articles.map((article) => (
-            <TableRow key={article.id}>
+            <TableRow key={article.id} onClick={() => router.push(`/admin/articles/${article.id}`)}>
               <TableCell>
-                <Link
-                  href={`/admin/article/${article.id}`}
-                  className="hover:underline"
-                >
-                  {article.draftTitle}
-                </Link>
+                {article.draftTitle}
               </TableCell>
               <TableCell>
                 {isPublished(article)

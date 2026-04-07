@@ -124,6 +124,9 @@ export default function AdminArticleEditPage() {
 
   return (
     <div className="flex flex-col items-start gap-4 m-4 mx-auto px-8">
+      <div className="flex items-center justify-start w-full">
+        <Button variant="outline" onClick={() => {router.push(`/admin/articles`)}}>一覧に戻る</Button>
+      </div>
       <div className="flex items-center justify-between w-full">
         <p className="text-sm text-muted-foreground">
           公開日:{" "}
