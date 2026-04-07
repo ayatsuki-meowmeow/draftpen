@@ -15,7 +15,6 @@ const _schema = i.schema({
       updatedAt: i.date(),
     }),
     articles: i.entity({
-      slug: i.string().unique().indexed(),
       draftTitle: i.string().indexed(),
       title: i.string().indexed(),
       content: i.string(),

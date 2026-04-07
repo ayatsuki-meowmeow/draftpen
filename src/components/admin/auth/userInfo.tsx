@@ -48,7 +48,7 @@ export default function UserInfo() {
         ログアウト
       </Button>
       <Button variant="outline" className="w-120 h-60" asChild>
-        <Link href="/admin/article">記事管理画面へ</Link>
+        <Link href="/admin/articles">記事管理画面へ</Link>
       </Button>
     </div>
   );

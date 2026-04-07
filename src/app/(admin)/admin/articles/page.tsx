@@ -1,11 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import { db } from "@/lib/db";
 import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
 import { USE_MOCK } from "@/lib/constants";
-import { isPublished, sortByPublishedAt } from "@/services/article/actions";
+import {
+  createArticle,
+  isPublished,
+  sortByPublishedAt,
+} from "@/services/article/actions";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -14,8 +18,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useRouter } from "next/navigation";
 
 export default function AdminArticlePage() {
+  const router = useRouter();
+
+  const handleCreateArticle = async () => {
+    const newId = await createArticle();
+    router.push(`/admin/articles/${newId}`);
+  };
   const { isLoading, error, data } = db.useQuery({
     articles: {
       $: { order: { publishedAt: "desc" } },
@@ -32,25 +43,24 @@ export default function AdminArticlePage() {
 
   return (
     <div className="p-4">
+      <div className="flex justify-end mb-4">
+        <Button onClick={handleCreateArticle}>新規作成</Button>
+      </div>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>記事名</TableHead>
-            <TableHead>最終編集日</TableHead>
             <TableHead>公開日</TableHead>
+            <TableHead>最終編集日</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {articles.map((article) => (
-            <TableRow key={article.id}>
-              <TableCell>
-                <Link
-                  href={`/admin/article/${article.id}`}
-                  className="hover:underline"
-                >
-                  {article.draftTitle}
-                </Link>
-              </TableCell>
+            <TableRow
+              key={article.id}
+              onClick={() => router.push(`/admin/articles/${article.id}`)}
+            >
+              <TableCell>{article.draftTitle}</TableCell>
               <TableCell>
                 {isPublished(article)
                   ? new Date(article.publishedAt).toLocaleString("ja-JP")
