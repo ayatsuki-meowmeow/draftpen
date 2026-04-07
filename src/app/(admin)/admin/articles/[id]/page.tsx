@@ -2,8 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { DbError } from "@/components/ui/db-error";
+import { MarkdownRenderer } from "@/components/ui/markdown-renderer";
 import { USE_MOCK } from "@/lib/constants";
 import { db } from "@/lib/db";
+import { cn } from "@/lib/utils";
 import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
 import { Article } from "@/types/article";
@@ -30,6 +32,9 @@ export default function AdminArticleEditPage() {
   );
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">(
     "idle",
+  );
+  const [viewMode, setViewMode] = useState<"edit" | "split" | "preview">(
+    "split",
   );
   const isFirstRender = useRef(true);
 
@@ -90,14 +95,14 @@ export default function AdminArticleEditPage() {
   if (!rawArticle)
     return (
       <div className="flex flex-col items-center m-4">
-        <Button onClick={handleCreateArticle} >
+        <Button onClick={handleCreateArticle}>
           新規記事の作成
         </Button>
       </div>
     );
 
   return (
-    <div className="flex flex-col items-start gap-4 m-4 max-w-2xl mx-auto">
+    <div className="flex flex-col items-start gap-4 m-4 mx-auto px-8">
       <div className="flex items-center justify-between w-full">
         <p className="text-sm text-muted-foreground">
           公開日:{" "}
@@ -120,13 +125,51 @@ export default function AdminArticleEditPage() {
         />
       </div>
       <div className="w-full">
-        <p className="text-sm font-medium mb-1">本文</p>
-        <textarea
-          className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring min-h-[400px] resize-y"
-          value={draftContent}
-          onChange={(e) => setDraftContent(e.target.value)}
-          placeholder="本文を入力"
-        />
+        <div className="flex items-center justify-between mb-1">
+          <p className="text-sm font-medium">本文</p>
+          <div className="flex gap-1">
+            <Button
+              variant={viewMode === "edit" ? "default" : "outline"}
+              size="xs"
+              onClick={() => setViewMode("edit")}
+            >
+              編集
+            </Button>
+            <Button
+              variant={viewMode === "split" ? "default" : "outline"}
+              size="xs"
+              onClick={() => setViewMode("split")}
+            >
+              分割
+            </Button>
+            <Button
+              variant={viewMode === "preview" ? "default" : "outline"}
+              size="xs"
+              onClick={() => setViewMode("preview")}
+            >
+              プレビュー
+            </Button>
+          </div>
+        </div>
+        <div
+          className={cn(
+            viewMode === "split" ? "grid grid-cols-2 gap-4" : "block",
+          )}
+        >
+          {viewMode !== "preview" && (
+            <textarea
+              className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring min-h-[400px] resize-y"
+              value={draftContent}
+              onChange={(e) => setDraftContent(e.target.value)}
+              placeholder="本文をMarkdownで入力"
+            />
+          )}
+          {viewMode !== "edit" && (
+            <div className="min-h-[400px] border rounded px-3 py-2">
+              <MarkdownRenderer content={draftContent} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

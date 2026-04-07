@@ -1,6 +1,7 @@
 "use client";
 
 import { DbError } from "@/components/ui/db-error";
+import { MarkdownRenderer } from "@/components/ui/markdown-renderer";
 import { USE_MOCK } from "@/lib/constants";
 import { db } from "@/lib/db";
 import { mockArticles } from "@/mocks/articles";
@@ -38,7 +39,7 @@ function ArticleDetailPage() {
         <p>公開日: {convertDateString(article.publishedAt)}</p>
         <p>最終更新日: {convertDateString(article.updatedAt)}</p>
       </div>
-      <p className="text-xl">{article.content}</p>
+      <MarkdownRenderer content={article.content} />
     </div>
   );
 }
