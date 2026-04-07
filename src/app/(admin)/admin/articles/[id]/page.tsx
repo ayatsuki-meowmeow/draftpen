@@ -1,5 +1,6 @@
 "use client";
 
+import { Dialog } from "@base-ui/react/dialog";
 import { Button } from "@/components/ui/button";
 import { DbError } from "@/components/ui/db-error";
 import { MarkdownRenderer } from "@/components/ui/markdown-renderer";
@@ -8,6 +9,7 @@ import { db } from "@/lib/db";
 import { cn } from "@/lib/utils";
 import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
+import { isPublished, publishArticle } from "@/services/article/actions";
 import { Article } from "@/types/article";
 import { convertDateString } from "@/utils";
 import { id } from "@instantdb/react";
@@ -36,6 +38,9 @@ export default function AdminArticleEditPage() {
   const [viewMode, setViewMode] = useState<"edit" | "split" | "preview">(
     "split",
   );
+  const [isPublishDialogOpen, setIsPublishDialogOpen] = useState(false);
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+  const [isPublishing, setIsPublishing] = useState(false);
   const isFirstRender = useRef(true);
 
   // rawArticle が取得されたタイミングで初期値をセット（記事IDが変わった時だけ同期）
@@ -69,6 +74,22 @@ export default function AdminArticleEditPage() {
 
     return () => clearTimeout(timer);
   }, [draftTitle, draftContent, articleId]);
+
+  const handlePublishConfirm = async () => {
+    if (USE_MOCK) return;
+    setIsPublishing(true);
+    await publishArticle(articleId, draftTitle, draftContent);
+    setIsPublishing(false);
+    setIsPublishDialogOpen(false);
+  };
+
+  const handleUpdateConfirm = async () => {
+    if (USE_MOCK) return;
+    setIsPublishing(true);
+    await publishArticle(articleId, draftTitle, draftContent);
+    setIsPublishing(false);
+    setIsUpdateDialogOpen(false);
+  };
 
   const handleCreateArticle = async () => {
     const newId = id();
@@ -114,6 +135,59 @@ export default function AdminArticleEditPage() {
           {saveStatus === "saving" && "保存中..."}
           {saveStatus === "saved" && "保存しました"}
         </span>
+        {isPublished(rawArticle) ? (
+          <Dialog.Root
+            open={isUpdateDialogOpen}
+            onOpenChange={setIsUpdateDialogOpen}
+          >
+            <Dialog.Trigger render={<Button variant="outline" />}>更新</Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 bg-black/40" />
+              <Dialog.Popup className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background border rounded-lg shadow-lg p-6 w-80 flex flex-col gap-4">
+                <Dialog.Title className="text-base font-semibold">
+                  記事を更新しますか？
+                </Dialog.Title>
+                <Dialog.Description className="text-sm text-muted-foreground">
+                  更新すると取り消すことはできません。
+                </Dialog.Description>
+                <div className="flex justify-end gap-2">
+                  <Dialog.Close render={<Button variant="outline" />}>
+                    キャンセル
+                  </Dialog.Close>
+                  <Button onClick={handleUpdateConfirm} disabled={isPublishing}>
+                    {isPublishing ? "更新中..." : "更新する"}
+                  </Button>
+                </div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
+        ) : (
+          <Dialog.Root
+            open={isPublishDialogOpen}
+            onOpenChange={setIsPublishDialogOpen}
+          >
+            <Dialog.Trigger render={<Button />}>公開する</Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Backdrop className="fixed inset-0 bg-black/40" />
+              <Dialog.Popup className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-background border rounded-lg shadow-lg p-6 w-80 flex flex-col gap-4">
+                <Dialog.Title className="text-base font-semibold">
+                  記事を公開しますか？
+                </Dialog.Title>
+                <Dialog.Description className="text-sm text-muted-foreground">
+                  公開すると取り消すことはできません。
+                </Dialog.Description>
+                <div className="flex justify-end gap-2">
+                  <Dialog.Close render={<Button variant="outline" />}>
+                    キャンセル
+                  </Dialog.Close>
+                  <Button onClick={handlePublishConfirm} disabled={isPublishing}>
+                    {isPublishing ? "公開中..." : "公開する"}
+                  </Button>
+                </div>
+              </Dialog.Popup>
+            </Dialog.Portal>
+          </Dialog.Root>
+        )}
       </div>
       <div className="w-full">
         <p className="text-sm font-medium mb-1">タイトル</p>
