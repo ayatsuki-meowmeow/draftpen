@@ -9,10 +9,9 @@ import { db } from "@/lib/db";
 import { cn } from "@/lib/utils";
 import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
-import { isPublished, publishArticle } from "@/services/article/actions";
+import { createArticle, isPublished, publishArticle } from "@/services/article/actions";
 import { Article } from "@/types/article";
 import { convertDateString } from "@/utils";
-import { id } from "@instantdb/react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
@@ -92,19 +91,7 @@ export default function AdminArticleEditPage() {
   };
 
   const handleCreateArticle = async () => {
-    const newId = id();
-    await db.transact(
-      db.tx.articles[newId].create({
-        slug: "",
-        draftTitle: "",
-        title: "",
-        content: "",
-        draftContent: "",
-        status: "draft",
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      }),
-    );
+    const newId = await createArticle();
     router.push(`/admin/articles/${newId}`);
   };
 

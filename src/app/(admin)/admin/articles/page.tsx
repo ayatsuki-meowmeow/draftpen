@@ -5,7 +5,8 @@ import { db } from "@/lib/db";
 import { mockArticles } from "@/mocks/articles";
 import { toArticle } from "@/repositories/article";
 import { USE_MOCK } from "@/lib/constants";
-import { isPublished, sortByPublishedAt } from "@/services/article/actions";
+import { createArticle, isPublished, sortByPublishedAt } from "@/services/article/actions";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -18,6 +19,11 @@ import { useRouter } from "next/navigation";
 
 export default function AdminArticlePage() {
   const router = useRouter();
+
+  const handleCreateArticle = async () => {
+    const newId = await createArticle();
+    router.push(`/admin/articles/${newId}`);
+  };
   const { isLoading, error, data } = db.useQuery({
     articles: {
       $: { order: { publishedAt: "desc" } },
@@ -34,6 +40,9 @@ export default function AdminArticlePage() {
 
   return (
     <div className="p-4">
+      <div className="flex justify-end mb-4">
+        <Button onClick={handleCreateArticle}>新規作成</Button>
+      </div>
       <Table>
         <TableHeader>
           <TableRow>
